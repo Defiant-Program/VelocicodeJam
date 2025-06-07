@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
 
         transform.position += (Input.GetAxisRaw("Horizontal") * Vector3.right + Input.GetAxisRaw("Vertical") * Vector3.forward) * moveSpeed * Time.deltaTime;
 
+        Aim();
+
         if (Input.GetMouseButtonDown(0))
         {
             if (ammo > 0)
@@ -47,6 +49,11 @@ public class Player : MonoBehaviour
     public void GetAmmo(int ammount)
     {
         ammo += ammount;
+    }
+
+    void Aim()
+    {
+        
     }
 
     void Shoot()
@@ -73,12 +80,17 @@ public class Player : MonoBehaviour
         return null;
     }
 
-    public void Hurt()
+    public void Hurt(Vector3 collisionPoint)
     {
         HP--;
         if (HP == 0)
         {
-            GameController.GC.lose = true;
+            Invoke("Lose", 0.5f);
         }
+    }
+
+    void Lose()
+    {
+        GameController.GC.lose = true;
     }
 }

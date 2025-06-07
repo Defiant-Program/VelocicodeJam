@@ -10,13 +10,14 @@ public class GameController : MonoBehaviour
     public static GameController GC;
 
     [SerializeField] TextMeshProUGUI enemyCountText;
-    [SerializeField] Transform enemyParent;
+    [SerializeField] public Transform enemyParent;
     int enemyCount;
 
     [SerializeField] TextMeshProUGUI ammoText;
 
     [SerializeField] GameObject winScreen;
     [SerializeField] GameObject loseScreen;
+    [SerializeField] public Transform deadEnemiesParent;
 
     public bool lose;
 
@@ -25,7 +26,6 @@ public class GameController : MonoBehaviour
         if (GC == null)
             GC = this;
         Time.timeScale = 1;
-
     }
 
     // Start is called before the first frame update

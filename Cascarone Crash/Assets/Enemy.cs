@@ -21,6 +21,16 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] bool traitor;
 
+    public int enemyID;
+    GameObject target;
+    [SerializeField] int enemiesKilled = 0;
+
+    GameObject killedBy;
+
+    [SerializeField] Rigidbody rb;
+    bool dead;
+
+    [SerializeField] TrailRenderer tr;
     void Start()
     {
         anim.speed = wobbleSpeed;
@@ -29,44 +39,82 @@ public class Enemy : MonoBehaviour
         Debug.Log(Player);
         cascaroneParent = GameObject.Find("Cascarones").transform;
         Debug.Log(cascaroneParent);
+        rb = GetComponent<Rigidbody>();
+        ChangeTarget();
+
+        tr = GetComponent<TrailRenderer>();
+        tr.enabled = false;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (cooldown < 0)
+        if (!dead)
         {
-            if (traitor)
-                agent.SetDestination(transform.position + Vector3.right * Random.Range(-4, 4) + Vector3.forward * Random.Range(-4, 4));
-            else
-                agent.SetDestination(Player.transform.position + Vector3.left * 4);
-        }
-        if (HP == 0)
-        {
-            Die();
-        }
+            if (target?.GetComponent<Enemy>())
+            {
+                if (target.GetComponent<Enemy>().dead)
+                {
+                    ChangeTarget();
+                }
+            }
+            if (cooldown < 0)
+            {
+                SetDestination();
+            }
+            if (!target)
+                ChangeTarget();
+            if (Vector3.Distance(transform.position, target.transform.position) < 10 && cooldown < 0)
+            {
+                Shoot();
+            }
 
-        if(Vector3.Distance(transform.position, Player.transform.position) < 10 && cooldown < 0)
-        {
-            Shoot();
+            cooldown -= Time.deltaTime;
         }
-        else if(cooldown < 0) //shoot anyway lol
-        {
-            Shoot();
-        }
-
-        cooldown -= Time.deltaTime;
     }
 
-    public void Hurt()
-    {
+    public void Hurt(GameObject thrownBy, Vector3 collisionPoint)
+    {        
+        killedBy = thrownBy;
         HP--;
+        if (HP == 0 && !dead)
+        {
+            Die(collisionPoint);
+        }
     }
 
-    void Die()
+    void Die(Vector3 collisionPoint)
     {
-        Destroy(gameObject);
+        tr.enabled = true;
+        gameObject.layer = 11;
+        agent.enabled = false;
+        dead = true;
+        transform.parent = GameController.GC.deadEnemiesParent;
+        rb.AddForce((transform.position - collisionPoint) * 50 + Vector3.up* 4, ForceMode.Impulse);
+
+        if(killedBy)
+            if (killedBy.GetComponent<Enemy>())
+                killedBy.GetComponent<Enemy>().enemiesKilled++;
+
+        Invoke("DisableSelf", 3f);
+    }
+
+    void SetDestination()
+    {
+        if (traitor && enemiesKilled < 3)
+        {
+            if (target)
+            {
+                agent.SetDestination(target.transform.position + (Vector3.right * Random.Range(-4, 4) + Vector3.forward * Random.Range(-2, 2)));
+            }
+            else
+            {
+                ChangeTarget();
+            }
+        }
+        else
+            agent.SetDestination(Player.transform.position + Vector3.left * 4);
     }
 
     void Shoot()
@@ -88,5 +136,42 @@ public class Enemy : MonoBehaviour
             }
         }
         return null;
+    }
+
+    void ChangeTarget()
+    {
+        int newTarget = Random.Range(0, GameController.GC.enemyParent.childCount);
+        if (GameController.GC.enemyParent.GetChild(newTarget).gameObject == gameObject)
+        {
+            //Everyone else is dead
+            if (GameController.GC.enemyParent.childCount == 1)
+            {
+                target = Player;
+                return;
+            }
+            //The current enemy is actually the last one in the list
+            if (newTarget == GameController.GC.enemyParent.childCount - 1)
+            {
+                newTarget--;
+                target = GameController.GC.enemyParent.GetChild(newTarget).gameObject;
+                return;
+            }
+            //The current enemy is actually the first one in the list
+            if (newTarget == 0)
+            {
+                newTarget++;
+                target = GameController.GC.enemyParent.GetChild(newTarget).gameObject;
+                return;
+            }
+        }
+        else
+        {
+            target = GameController.GC.enemyParent.GetChild(newTarget).gameObject;
+        }
+    }
+
+    void DisableSelf()
+    {
+        gameObject.SetActive(false);
     }
 }
