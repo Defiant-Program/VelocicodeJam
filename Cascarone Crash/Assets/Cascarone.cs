@@ -6,16 +6,18 @@ public class Cascarone : MonoBehaviour
 {
 
     public GameObject thrownBy;
-
+    public Vector3 trajectory;
     void OnEnable()
     {
         Invoke("DisableSelf", 5f);
+        if (trajectory == Vector3.zero)
+            trajectory = Vector3.right;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += Vector3.right * Time.deltaTime * 15;
+        transform.position += trajectory * Time.deltaTime * 5;
     }
 
     /*
@@ -43,7 +45,6 @@ public class Cascarone : MonoBehaviour
         {
             foreach (ContactPoint contact in collision.contacts)
             {
-                Debug.Log("Collided");
                 if (contact.otherCollider.gameObject.tag == "Enemy")
                 {
                     collision.gameObject.GetComponent<Enemy>().Hurt(thrownBy, contact.point);

@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] bool traitor;
 
     public int enemyID;
-    GameObject target;
+    [SerializeField] GameObject target;
     [SerializeField] int enemiesKilled = 0;
 
     GameObject killedBy;
@@ -40,7 +40,9 @@ public class Enemy : MonoBehaviour
         cascaroneParent = GameObject.Find("Cascarones").transform;
         Debug.Log(cascaroneParent);
         rb = GetComponent<Rigidbody>();
+
         ChangeTarget();
+        
 
         tr = GetComponent<TrailRenderer>();
         tr.enabled = false;
@@ -52,7 +54,9 @@ public class Enemy : MonoBehaviour
     {
         if (!dead)
         {
-            if (target?.GetComponent<Enemy>())
+            if (!target)
+                ChangeTarget();
+            if (target.GetComponent<Enemy>())
             {
                 if (target.GetComponent<Enemy>().dead)
                 {
@@ -123,6 +127,7 @@ public class Enemy : MonoBehaviour
         Cascarone cascarone = FindCascarone();
         cascarone.thrownBy = gameObject;
         cascarone.transform.position = transform.position;
+        cascarone.trajectory = target.transform.position - transform.position;
         cascarone.gameObject.SetActive(true);
     }
 
@@ -140,7 +145,7 @@ public class Enemy : MonoBehaviour
 
     void ChangeTarget()
     {
-        int newTarget = Random.Range(0, GameController.GC.enemyParent.childCount);
+        int newTarget = Random.Range(0, GameController.GC.enemyParent.childCount-1);
         if (GameController.GC.enemyParent.GetChild(newTarget).gameObject == gameObject)
         {
             //Everyone else is dead
@@ -167,7 +172,7 @@ public class Enemy : MonoBehaviour
         else
         {
             target = GameController.GC.enemyParent.GetChild(newTarget).gameObject;
-        }
+        }        
     }
 
     void DisableSelf()
