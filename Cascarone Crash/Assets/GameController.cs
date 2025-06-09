@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour
 
     public bool lose;
 
+    public Material[] mats;
+
     private void OnEnable()
     {
         if (GC == null)

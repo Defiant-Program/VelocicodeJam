@@ -28,6 +28,10 @@ public class Player : MonoBehaviour
     [SerializeField] float reticalDistance;
 
 
+    void Start()
+    {
+        anim.speed = wobbleSpeed;
+    }
 
     // Update is called once per frame
     void Update()
@@ -35,6 +39,10 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
             Move();
+        }
+        else
+        {
+            anim.speed = wobbleSpeed;
         }
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.RightArrow))
         {
@@ -66,7 +74,7 @@ public class Player : MonoBehaviour
         moveMe += Input.GetKey(KeyCode.A) ? Vector3.left : Vector3.zero;
         moveMe += Input.GetKey(KeyCode.S) ? Vector3.back : Vector3.zero;
         moveMe += Input.GetKey(KeyCode.D) ? Vector3.right : Vector3.zero;
-        anim.speed = Mathf.Min(0.5f + Mathf.Abs(moveMe.x * wobbleSpeed) + Mathf.Abs(moveMe.z * wobbleSpeed), wobbleSpeed);
+        anim.speed = 0.5f + Mathf.Abs(moveMe.x * wobbleSpeed) + Mathf.Abs(moveMe.z * wobbleSpeed);
         transform.position += moveMe * moveSpeed * Time.deltaTime;
     }
     void Aim()
@@ -88,7 +96,7 @@ public class Player : MonoBehaviour
         {
             Cascarone cascarone = FindCascarone();
             cascarone.thrownBy = gameObject;
-            cascarone.transform.position = transform.position;
+            cascarone.transform.position = transform.position + Vector3.up * 1.33f;
             cascarone.trajectory = retical.transform.position - transform.position;
             cascarone.gameObject.SetActive(true);
             GetAmmo(-1);

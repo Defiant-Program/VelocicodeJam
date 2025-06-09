@@ -31,8 +31,18 @@ public class Enemy : MonoBehaviour
     bool dead;
 
     [SerializeField] TrailRenderer tr;
+
+    [SerializeField] MeshRenderer enemyRenderer;
+    int enemyType;
+
+    string[] movements = { "Man", "Dog", "Rat", "Cat", "Bird" };
+
     void Start()
     {
+        enemyID = transform.GetSiblingIndex();
+
+        enemyType = Random.Range(0, GameController.GC.mats.Length);
+        enemyRenderer.material = GameController.GC.mats[enemyType];
         anim.speed = wobbleSpeed;
 
         Player = GameObject.Find("Player Controller");
@@ -42,11 +52,12 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         ChangeTarget();
-        
+        agent.updateRotation = false;
 
         tr = GetComponent<TrailRenderer>();
         tr.enabled = false;
 
+        anim.Play(movements[enemyType] + "Movement");
     }
 
     // Update is called once per frame
@@ -67,8 +78,6 @@ public class Enemy : MonoBehaviour
             {
                 SetDestination();
             }
-            if (!target)
-                ChangeTarget();
             if (Vector3.Distance(transform.position, target.transform.position) < 10 && cooldown < 0)
             {
                 Shoot();
@@ -92,6 +101,7 @@ public class Enemy : MonoBehaviour
     {
         tr.enabled = true;
         gameObject.layer = 11;
+        GetComponent<CapsuleCollider>().enabled = false;
         agent.enabled = false;
         dead = true;
         transform.parent = GameController.GC.deadEnemiesParent;
@@ -123,11 +133,11 @@ public class Enemy : MonoBehaviour
 
     void Shoot()
     {
-        cooldown = 5f;
+        cooldown = Random.Range(1f, 6f);
         Cascarone cascarone = FindCascarone();
         cascarone.thrownBy = gameObject;
-        cascarone.transform.position = transform.position;
-        cascarone.trajectory = target.transform.position - transform.position;
+        cascarone.trajectory = new Vector3(target.transform.position.x - transform.position.x, 0, target.transform.position.z - transform.position.z);
+        cascarone.transform.position = transform.position + cascarone.trajectory.normalized;
         cascarone.gameObject.SetActive(true);
     }
 
@@ -155,7 +165,7 @@ public class Enemy : MonoBehaviour
                 return;
             }
             //The current enemy is actually the last one in the list
-            if (newTarget == GameController.GC.enemyParent.childCount - 1)
+            if (newTarget <= GameController.GC.enemyParent.childCount - 1 && newTarget != 0)
             {
                 newTarget--;
                 target = GameController.GC.enemyParent.GetChild(newTarget).gameObject;
@@ -172,7 +182,13 @@ public class Enemy : MonoBehaviour
         else
         {
             target = GameController.GC.enemyParent.GetChild(newTarget).gameObject;
+            return;
         }        
+
+        if(!target)
+        {
+            Debug.Log("How. Enemy ID: " + enemyID + " newTarget#: " + newTarget + "Target? " + target);
+        }
     }
 
     void DisableSelf()

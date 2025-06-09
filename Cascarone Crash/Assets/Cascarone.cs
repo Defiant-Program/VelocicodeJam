@@ -7,11 +7,27 @@ public class Cascarone : MonoBehaviour
 
     public GameObject thrownBy;
     public Vector3 trajectory;
+
+    MeshRenderer mr;
+    CapsuleCollider cc;
+
+
     void OnEnable()
     {
+        if (mr)
+            mr.enabled = true;
+        if (cc)
+            cc.enabled = true;
+        transform.SetAsLastSibling();
         Invoke("DisableSelf", 5f);
         if (trajectory == Vector3.zero)
             trajectory = Vector3.right;
+    }
+
+    void Start()
+    {
+        mr = GetComponent<MeshRenderer>();
+        cc = GetComponent<CapsuleCollider>();
     }
 
     // Update is called once per frame
@@ -48,14 +64,18 @@ public class Cascarone : MonoBehaviour
                 if (contact.otherCollider.gameObject.tag == "Enemy")
                 {
                     collision.gameObject.GetComponent<Enemy>().Hurt(thrownBy, contact.point);
-                    gameObject.SetActive(false);
+                    mr.enabled = false;
+                    cc.enabled = false;
                 }
                 if (contact.otherCollider.gameObject.tag == "Player")
                 {
                     collision.gameObject.GetComponent<Player>().Hurt(contact.point);
-                    gameObject.SetActive(false);
+                    mr.enabled = false;
+                    cc.enabled = false;
                 }
             }
+            mr.enabled = false;
+            cc.enabled = false;
         }
     }
 
