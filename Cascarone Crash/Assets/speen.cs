@@ -29,4 +29,18 @@ public class speen : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<Player>().GetAmmo(6);
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.tag == "Enemy")
+        {
+            //Enemies have unlimited ammo
+            Destroy(gameObject);
+        }
+    }
 }

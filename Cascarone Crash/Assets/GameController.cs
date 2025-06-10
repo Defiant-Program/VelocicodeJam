@@ -23,6 +23,12 @@ public class GameController : MonoBehaviour
 
     public Material[] mats;
 
+    [SerializeField] bool debugTimescale;
+
+    [Range(0, 1)]
+    [SerializeField] float newTimescale;
+
+
     private void OnEnable()
     {
         if (GC == null)
@@ -40,18 +46,15 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(debugTimescale)
+            Time.timeScale = newTimescale;
         enemyCount = enemyParent.childCount;
         enemyCountText.text = "Enemies Remaining: " + enemyCount;
         if(enemyCount == 0)
         {
             winScreen.SetActive(true);
             Time.timeScale = 0;
-        }
-        if (lose)
-        {
-            loseScreen.SetActive(true);
-            Time.timeScale = 0;
-        }
+        }       
     }
 
     public void UpdateAmmo(int ammount)
@@ -61,6 +64,20 @@ public class GameController : MonoBehaviour
 
     public void Restart()
     {
+        Time.timeScale = 1;
+        foreach (Transform de in deadEnemiesParent)
+            de.GetComponent<Enemy>().tr.enabled = false;
+        Invoke("ActuallyRestart", 0.01f);
+    }
+
+    void ActuallyRestart()
+    {
         SceneManager.LoadScene(0);
+    }
+
+    public void Lose()
+    {
+        loseScreen.SetActive(true);
+        Time.timeScale = 0;
     }
 }

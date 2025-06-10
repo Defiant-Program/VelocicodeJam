@@ -30,12 +30,15 @@ public class Enemy : MonoBehaviour
     [SerializeField] Rigidbody rb;
     bool dead;
 
-    [SerializeField] TrailRenderer tr;
+    [SerializeField] public TrailRenderer tr;
 
     [SerializeField] MeshRenderer enemyRenderer;
     int enemyType;
 
     string[] movements = { "Man", "Dog", "Rat", "Cat", "Bird" };
+
+    bool chasing = false;
+    bool shooting = false;
 
     void Start()
     {
@@ -58,14 +61,19 @@ public class Enemy : MonoBehaviour
         tr.enabled = false;
 
         anim.Play(movements[enemyType] + "Movement");
+        StartCoroutine(Wander());
+
+        traitor = enemyID % 4 == 0;
+
+        agent.avoidancePriority = Random.Range(30, 60);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!dead)
+        if (!dead && !shooting)
         {
-            if (!target)
+            if (!target || cooldown < -10 )
                 ChangeTarget();
             if (target.GetComponent<Enemy>())
             {
@@ -74,13 +82,16 @@ public class Enemy : MonoBehaviour
                     ChangeTarget();
                 }
             }
-            if (cooldown < 0)
+            if (cooldown < 0 && chasing)
             {
                 SetDestination();
             }
+            chasing = Vector3.Distance(transform.position, target.transform.position) > 10;
             if (Vector3.Distance(transform.position, target.transform.position) < 10 && cooldown < 0)
             {
-                Shoot();
+                shooting = true;
+                agent.isStopped = true;
+                Invoke("Shoot", 1f);
             }
 
             cooldown -= Time.deltaTime;
@@ -107,16 +118,18 @@ public class Enemy : MonoBehaviour
         transform.parent = GameController.GC.deadEnemiesParent;
         rb.AddForce((transform.position - collisionPoint) * 50 + Vector3.up* 4, ForceMode.Impulse);
 
-        if(killedBy)
+        if (killedBy)
             if (killedBy.GetComponent<Enemy>())
-                killedBy.GetComponent<Enemy>().enemiesKilled++;
+                killedBy.GetComponent<Enemy>().AddKillCount();
+
+        StopAllCoroutines();
 
         Invoke("DisableSelf", 3f);
     }
 
     void SetDestination()
     {
-        if (traitor && enemiesKilled < 3)
+        if (traitor)
         {
             if (target)
             {
@@ -133,12 +146,18 @@ public class Enemy : MonoBehaviour
 
     void Shoot()
     {
-        cooldown = Random.Range(1f, 6f);
-        Cascarone cascarone = FindCascarone();
-        cascarone.thrownBy = gameObject;
-        cascarone.trajectory = new Vector3(target.transform.position.x - transform.position.x, 0, target.transform.position.z - transform.position.z);
-        cascarone.transform.position = transform.position + cascarone.trajectory.normalized;
-        cascarone.gameObject.SetActive(true);
+        if (!dead)
+        {
+            shooting = false;
+            agent.isStopped = false;
+
+            cooldown = Random.Range(1f, 6f);
+            Cascarone cascarone = FindCascarone();
+            cascarone.thrownBy = gameObject;
+            cascarone.trajectory = new Vector3(target.transform.position.x - transform.position.x, 0, target.transform.position.z - transform.position.z);
+            cascarone.transform.position = transform.position + cascarone.trajectory.normalized;
+            cascarone.gameObject.SetActive(true);
+        }
     }
 
     Cascarone FindCascarone()
@@ -181,7 +200,10 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            target = GameController.GC.enemyParent.GetChild(newTarget).gameObject;
+            if (traitor)
+                target = GameController.GC.enemyParent.GetChild(newTarget).gameObject;
+            else
+                target = Player;
             return;
         }        
 
@@ -191,8 +213,49 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void AddKillCount()
+    {
+        enemiesKilled++;
+        if (enemiesKilled >= 3)
+            traitor = false;
+    }
+
     void DisableSelf()
     {
         gameObject.SetActive(false);
+    }
+
+    IEnumerator Wander()
+    {
+        while (!dead)
+        {
+            if (!chasing && !shooting)
+            {
+                float waitTime = Random.Range(1, 3);
+                yield return new WaitForSeconds(waitTime);
+
+                Vector3 randomDirection = Random.insideUnitSphere * 15;
+                randomDirection += transform.position;
+
+                if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, 15, NavMesh.AllAreas))
+                {
+                    agent.SetDestination(hit.position);
+                }
+                if (!dead)
+                {
+                    while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+                    {
+                        yield return null;
+                    }
+                }
+                else
+                    yield return null;
+
+            }
+            else
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
     }
 }

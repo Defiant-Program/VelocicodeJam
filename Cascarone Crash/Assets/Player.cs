@@ -27,10 +27,13 @@ public class Player : MonoBehaviour
     [SerializeField] float reticalSpeed;
     [SerializeField] float reticalDistance;
 
+    [SerializeField] Rigidbody rb;
+
 
     void Start()
     {
         anim.speed = wobbleSpeed;
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -43,6 +46,7 @@ public class Player : MonoBehaviour
         else
         {
             anim.speed = wobbleSpeed;
+            rb.velocity = Vector3.zero;
         }
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.RightArrow))
         {
@@ -74,8 +78,10 @@ public class Player : MonoBehaviour
         moveMe += Input.GetKey(KeyCode.A) ? Vector3.left : Vector3.zero;
         moveMe += Input.GetKey(KeyCode.S) ? Vector3.back : Vector3.zero;
         moveMe += Input.GetKey(KeyCode.D) ? Vector3.right : Vector3.zero;
+        moveMe.Normalize();
         anim.speed = 0.5f + Mathf.Abs(moveMe.x * wobbleSpeed) + Mathf.Abs(moveMe.z * wobbleSpeed);
-        transform.position += moveMe * moveSpeed * Time.deltaTime;
+        //transform.position += moveMe * moveSpeed * Time.deltaTime;
+        rb.MovePosition(rb.position + moveMe * moveSpeed * Time.deltaTime);
     }
     void Aim()
     {
@@ -96,8 +102,10 @@ public class Player : MonoBehaviour
         {
             Cascarone cascarone = FindCascarone();
             cascarone.thrownBy = gameObject;
-            cascarone.transform.position = transform.position + Vector3.up * 1.33f;
-            cascarone.trajectory = retical.transform.position - transform.position;
+            cascarone.trajectory = (retical.transform.position - transform.position).normalized * 5;
+            if (cascarone.trajectory == Vector3.zero)
+                cascarone.trajectory = Vector3.right * 5;
+            cascarone.transform.position = transform.position + Vector3.up * 1.33f + (cascarone.trajectory.normalized * 3);
             cascarone.gameObject.SetActive(true);
             GetAmmo(-1);
         }
@@ -126,6 +134,6 @@ public class Player : MonoBehaviour
 
     void Lose()
     {
-        GameController.GC.lose = true;
+        GameController.GC.Lose();
     }
 }

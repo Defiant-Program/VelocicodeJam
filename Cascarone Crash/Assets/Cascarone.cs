@@ -67,11 +67,15 @@ public class Cascarone : MonoBehaviour
                     mr.enabled = false;
                     cc.enabled = false;
                 }
-                if (contact.otherCollider.gameObject.tag == "Player")
+                else if (contact.otherCollider.gameObject.tag == "Player")
                 {
                     collision.gameObject.GetComponent<Player>().Hurt(contact.point);
                     mr.enabled = false;
                     cc.enabled = false;
+                }
+                else
+                {
+                    Debug.Log(contact.otherCollider.name);
                 }
             }
             mr.enabled = false;
