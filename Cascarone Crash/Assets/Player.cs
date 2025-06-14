@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
         {
             Aim();
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space))
         {
             if (ammo > 0)
             {
