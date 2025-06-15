@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] Animator anim;
     [SerializeField] float wobbleSpeed;
 
+    [SerializeField] float ratWobbleSpeed = 1;
+
     [SerializeField] int HP = 1;
 
     GameObject Player;
@@ -66,6 +68,11 @@ public class Enemy : MonoBehaviour
         traitor = enemyID % 4 == 0;
 
         agent.avoidancePriority = Random.Range(30, 60);
+
+        if(enemyType == 2)
+        {
+            anim.speed = ratWobbleSpeed;
+        }
     }
 
     // Update is called once per frame
