@@ -78,6 +78,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 7358559103262354407}
   wobbleSpeed: 0.5
+  ratWobbleSpeed: 1
   HP: 1
   cooldown: 5
   agent: {fileID: 8863174672930231351}
@@ -88,6 +89,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   tr: {fileID: 0}
   enemyRenderer: {fileID: 6608123190521932679}
+  visionDistance: 15
 --- !u!136 &4866409132378255880
 CapsuleCollider:
   m_ObjectHideFlags: 0

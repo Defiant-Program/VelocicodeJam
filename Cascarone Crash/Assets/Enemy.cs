@@ -41,7 +41,9 @@ public class Enemy : MonoBehaviour
 
     bool chasing = false;
     bool shooting = false;
+    bool shootingAtPlayerTemporarily;
 
+    [SerializeField] float visionDistance = 15;
     void Start()
     {
         enemyID = transform.GetSiblingIndex();
@@ -93,9 +95,11 @@ public class Enemy : MonoBehaviour
             {
                 SetDestination();
             }
-            chasing = Vector3.Distance(transform.position, target.transform.position) > 10;
-            if (Vector3.Distance(transform.position, target.transform.position) < 10 && cooldown < 0)
+            chasing = Vector3.Distance(transform.position, target.transform.position) > visionDistance;
+            if ((Vector3.Distance(transform.position, target.transform.position) < visionDistance || Vector3.Distance(transform.position, Player.transform.position) < visionDistance) && cooldown < 0)
             {
+                if (Vector3.Distance(transform.position, Player.transform.position) < visionDistance)
+                    shootingAtPlayerTemporarily = true;
                 shooting = true;
                 agent.isStopped = true;
                 Invoke("Shoot", 1f);
@@ -161,8 +165,15 @@ public class Enemy : MonoBehaviour
             cooldown = Random.Range(1f, 6f);
             Cascarone cascarone = FindCascarone();
             cascarone.thrownBy = gameObject;
-            cascarone.trajectory = new Vector3(target.transform.position.x - transform.position.x, 0, target.transform.position.z - transform.position.z);
-            cascarone.transform.position = transform.position + cascarone.trajectory.normalized;
+            if (shootingAtPlayerTemporarily)
+            {
+                cascarone.trajectory = new Vector3(Player.transform.position.x - transform.position.x, 0, Player.transform.position.z - transform.position.z).normalized * 5;
+                shootingAtPlayerTemporarily = false;
+            }
+            else
+                cascarone.trajectory = new Vector3(target.transform.position.x - transform.position.x, 0, target.transform.position.z - transform.position.z).normalized * 5;
+
+            cascarone.transform.position = transform.position + cascarone.trajectory;
             cascarone.gameObject.SetActive(true);
         }
     }

@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour
     [Range(0, 1)]
     [SerializeField] float newTimescale;
 
+    [SerializeField] Player player;
 
     private void OnEnable()
     {
@@ -54,7 +55,7 @@ public class GameController : MonoBehaviour
         {
             winScreen.SetActive(true);
             Time.timeScale = 0;
-        }       
+        }
     }
 
     public void UpdateAmmo(int ammount)
@@ -65,6 +66,7 @@ public class GameController : MonoBehaviour
     public void Restart()
     {
         Time.timeScale = 1;
+        player.tr.enabled = false;
         foreach (Transform de in deadEnemiesParent)
             de.GetComponent<Enemy>().tr.enabled = false;
         Invoke("ActuallyRestart", 0.01f);

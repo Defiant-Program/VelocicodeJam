@@ -29,40 +29,55 @@ public class Player : MonoBehaviour
 
     [SerializeField] Rigidbody rb;
 
+    public TrailRenderer tr;
+    bool dead = false;
 
     void Start()
     {
         anim.speed = wobbleSpeed;
         rb = GetComponent<Rigidbody>();
+        tr = GetComponent<TrailRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        if (!dead)
         {
-            Move();
-        }
-        else
-        {
-            anim.speed = wobbleSpeed;
-            rb.velocity = Vector3.zero;
-        }
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.RightArrow))
-        {
-            Aim();
-        }
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space))
-        {
-            if (ammo > 0)
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
-                Shoot();
+                Move();
             }
             else
             {
-                //empty gun hammer click sfx
-                //"No ammo" particle effect
+                anim.speed = wobbleSpeed;
+                rb.velocity = Vector3.zero;
             }
+            if (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.L))
+            {
+                Aim();
+            }
+            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space))
+            {
+                if (Input.GetKey(KeyCode.I) || Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.K) || Input.GetKey(KeyCode.L))
+                {
+                    Aim();
+                }
+                if (ammo > 0)
+                {
+                    Shoot();
+                }
+                else
+                {
+                    //empty gun hammer click sfx
+                    //"No ammo" particle effect
+                }
+            }
+
+        }
+        else
+        {
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 10, Time.deltaTime * 2);
         }
     }
 
@@ -85,15 +100,17 @@ public class Player : MonoBehaviour
     }
     void Aim()
     {
-        Vector3 moveRetical = Input.GetKey(KeyCode.UpArrow) ? Vector3.forward : Vector3.zero;
-        moveRetical += Input.GetKey(KeyCode.LeftArrow) ? Vector3.left : Vector3.zero;
-        moveRetical += Input.GetKey(KeyCode.DownArrow) ? Vector3.back : Vector3.zero;
-        moveRetical += Input.GetKey(KeyCode.RightArrow) ? Vector3.right : Vector3.zero;
+        Vector3 moveRetical = Input.GetKey(KeyCode.I) ? Vector3.forward : Vector3.zero;
+        moveRetical += Input.GetKey(KeyCode.J) ? Vector3.left : Vector3.zero;
+        moveRetical += Input.GetKey(KeyCode.K) ? Vector3.back : Vector3.zero;
+        moveRetical += Input.GetKey(KeyCode.L) ? Vector3.right : Vector3.zero;
 
         moveRetical.Normalize();
-
-        retical.transform.localPosition = Vector3.MoveTowards(retical.transform.localPosition, moveRetical * reticalDistance, reticalSpeed * Time.deltaTime);
         
+        //retical.transform.localPosition = Vector3.MoveTowards(retical.transform.localPosition, moveRetical * reticalDistance, reticalSpeed * Time.deltaTime);
+        
+        retical.transform.localPosition = moveRetical * reticalDistance;
+
     }
 
     void Shoot()
@@ -128,6 +145,12 @@ public class Player : MonoBehaviour
         HP--;
         if (HP == 0)
         {
+            dead = true;
+            tr.enabled = true;
+            gameObject.layer = 11;
+            GetComponent<CapsuleCollider>().enabled = false;
+            rb.AddForce((transform.position - collisionPoint) * 50 + Vector3.up * 4, ForceMode.Impulse);
+
             Invoke("Lose", 0.5f);
         }
     }
