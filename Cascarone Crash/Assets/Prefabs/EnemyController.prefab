@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 7358559103262354407}
-  wobbleSpeed: 0.5
+  wobbleSpeed: 1
   ratWobbleSpeed: 1
   HP: 1
   cooldown: 5
@@ -90,6 +90,7 @@ MonoBehaviour:
   tr: {fileID: 0}
   enemyRenderer: {fileID: 6608123190521932679}
   visionDistance: 15
+  medal: {fileID: 4563316726410113968, guid: 538198346ec602544a29cc03dfe1859a, type: 3}
 --- !u!136 &4866409132378255880
 CapsuleCollider:
   m_ObjectHideFlags: 0

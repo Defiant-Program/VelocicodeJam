@@ -14,6 +14,8 @@ public class GameController : MonoBehaviour
     int enemyCount;
 
     [SerializeField] TextMeshProUGUI ammoText;
+    [SerializeField] TextMeshProUGUI medalsText;
+
 
     [SerializeField] GameObject winScreen;
     [SerializeField] GameObject loseScreen;
@@ -61,6 +63,11 @@ public class GameController : MonoBehaviour
     public void UpdateAmmo(int ammount)
     {
         ammoText.text = "Ammo: " + ammount;
+    }
+
+    public void UpdateGold(int ammount)
+    {
+        medalsText.text = "Medals: " + ammount;
     }
 
     public void Restart()

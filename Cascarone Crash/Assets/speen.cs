@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class speen : MonoBehaviour
 {
+    [SerializeField] bool ammo = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,14 +21,16 @@ public class speen : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            other.GetComponent<Player>().GetAmmo(6);
+            if (ammo)
+            {
+                other.GetComponent<Player>().GetAmmo(6);
+            }
+            else
+            {
+                other.GetComponent<Player>().GetGold(1);
+            }
             Destroy(gameObject);
         }    
-        else if(other.tag == "Enemy")
-        {
-            //Enemies have unlimited ammo
-            Destroy(gameObject);
-        }
     }
 
     void OnCollisionEnter(Collision collision)

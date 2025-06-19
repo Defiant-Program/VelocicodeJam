@@ -8,9 +8,13 @@ public class Cascarone : MonoBehaviour
     public GameObject thrownBy;
     public Vector3 trajectory;
 
-    MeshRenderer mr;
+    [SerializeField] MeshRenderer mr;
     CapsuleCollider cc;
 
+    [SerializeField] float lifeSpan = 3.5f;
+    float currentLifeSpan;
+
+    [SerializeField] float shotSpeed = 2.5f;
 
     void OnEnable()
     {
@@ -19,21 +23,26 @@ public class Cascarone : MonoBehaviour
         if (cc)
             cc.enabled = true;
         transform.SetAsLastSibling();
-        Invoke("DisableSelf", 5f);
+        Invoke("DisableSelf", lifeSpan);
         if (trajectory == Vector3.zero)
             trajectory = Vector3.right;
     }
 
     void Start()
     {
-        mr = GetComponent<MeshRenderer>();
+        mr = transform.GetChild(0).GetComponent<MeshRenderer>();
         cc = GetComponent<CapsuleCollider>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += trajectory * Time.deltaTime * 5;
+        transform.position += trajectory * Time.deltaTime * shotSpeed;
+
+        Debug.Log(Mathf.Sin((currentLifeSpan / lifeSpan) * Mathf.PI));
+        transform.GetChild(0).localPosition = (Vector3.up * Mathf.Sin((currentLifeSpan / lifeSpan) * Mathf.PI) * 3) + Vector3.up;
+
+        currentLifeSpan += Time.deltaTime;
     }
 
     /*

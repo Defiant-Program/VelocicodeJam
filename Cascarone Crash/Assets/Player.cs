@@ -32,6 +32,18 @@ public class Player : MonoBehaviour
     public TrailRenderer tr;
     bool dead = false;
 
+    [SerializeField] int _gold;
+    [SerializeField]
+    int gold
+    {
+        get { return _gold; }
+        set
+        {
+            _gold = value;
+            GameController.GC.UpdateGold(_gold);
+        }
+    }
+
     void Start()
     {
         anim.speed = wobbleSpeed;
@@ -84,6 +96,11 @@ public class Player : MonoBehaviour
     public void GetAmmo(int ammount)
     {
         ammo += ammount;
+    }
+
+    public void GetGold(int ammount)
+    {
+        gold += ammount;
     }
 
     void Move()

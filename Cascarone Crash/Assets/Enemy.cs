@@ -44,6 +44,9 @@ public class Enemy : MonoBehaviour
     bool shootingAtPlayerTemporarily;
 
     [SerializeField] float visionDistance = 15;
+
+    [SerializeField] GameObject medal;
+
     void Start()
     {
         enemyID = transform.GetSiblingIndex();
@@ -121,6 +124,7 @@ public class Enemy : MonoBehaviour
 
     void Die(Vector3 collisionPoint)
     {
+        
         tr.enabled = true;
         gameObject.layer = 11;
         GetComponent<CapsuleCollider>().enabled = false;
@@ -130,9 +134,21 @@ public class Enemy : MonoBehaviour
         rb.AddForce((transform.position - collisionPoint) * 50 + Vector3.up* 4, ForceMode.Impulse);
 
         if (killedBy)
+        {
             if (killedBy.GetComponent<Enemy>())
                 killedBy.GetComponent<Enemy>().AddKillCount();
-
+            else
+            {
+                if (Random.Range(0, 5) == 3)
+                {
+                    int randomMedals = Random.Range(0, 4);
+                    for (int i = 0; i < randomMedals; i++)
+                    {
+                        Instantiate(medal, transform.position, Quaternion.identity);
+                    }
+                }
+            }
+        }
         StopAllCoroutines();
 
         Invoke("DisableSelf", 3f);
