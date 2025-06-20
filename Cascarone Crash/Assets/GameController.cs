@@ -30,7 +30,7 @@ public class GameController : MonoBehaviour
     [Range(0, 1)]
     [SerializeField] float newTimescale;
 
-    [SerializeField] Player player;
+    [SerializeField] public Player player;
 
     private void OnEnable()
     {
