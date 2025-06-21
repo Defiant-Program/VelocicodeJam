@@ -47,6 +47,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] GameObject medal;
 
+    float shootingTimer = 0;
+
     void Start()
     {
         enemyID = transform.GetSiblingIndex();
@@ -83,6 +85,9 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!dead)
+            enemyRenderer.material.color = Color.white + Color.red * shootingTimer;
+
         if (!dead && !shooting)
         {
             if (!target || cooldown < -10 )
@@ -105,10 +110,17 @@ public class Enemy : MonoBehaviour
                     shootingAtPlayerTemporarily = true;
                 shooting = true;
                 agent.isStopped = true;
-                Invoke("Shoot", 1f);
             }
 
             cooldown -= Time.deltaTime;
+        }
+        else if(shooting && !dead)
+        {
+            shootingTimer += Time.deltaTime;
+            if(shootingTimer >= 1)
+            {
+                Shoot();
+            }
         }
     }
 
@@ -175,6 +187,7 @@ public class Enemy : MonoBehaviour
     {
         if (!dead)
         {
+            shootingTimer = 0;
             shooting = false;
             agent.isStopped = false;
 
