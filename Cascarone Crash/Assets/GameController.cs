@@ -48,10 +48,27 @@ public class GameController : MonoBehaviour
     [SerializeField] public TMP_Dropdown aimDropdown;
     [SerializeField] public Toggle mute;
 
+    [SerializeField] public Sprite[] characters;
+    [SerializeField] GameObject characterSelect;
+    int characterIndex;
+
+    string[] movements = { "Man", "Bird", "Cat", "Dog", "Rat" };
+    [SerializeField] Image previewCharacter;
+
+    [SerializeField] GameObject gameUI;
+
     private void OnEnable()
     {
         if (GC == null)
+        {
             GC = this;
+            characterSelect.SetActive(true);
+            gameUI.SetActive(false);
+        }
+
+        characterIndex = PlayerPrefs.GetInt("Character");
+        previewCharacter.sprite = characters[characterIndex];
+
         Time.timeScale = 1;
     }
 
@@ -67,6 +84,8 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (characterSelect.activeSelf)
+            return;
         if(debugTimescale)
             Time.timeScale = newTimescale;
         enemyCount = enemyParent.childCount;
@@ -141,4 +160,35 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    public void IncrementCharacterIndex()
+    {
+        characterIndex++;
+        characterIndex = characterIndex % characters.Length;
+        Debug.Log(characterIndex);
+
+        previewCharacter.sprite = characters[characterIndex];
+    }
+    public void DecrementCharacterIndex()
+    {
+        characterIndex--;
+        if (characterIndex < 0)
+            characterIndex = characters.Length - 1;
+        Debug.Log(characterIndex);
+        previewCharacter.sprite = characters[characterIndex];
+    }
+
+    public void SelectBtn()
+    {
+        PlayerPrefs.SetInt("Character", characterIndex);
+        enemyParent.gameObject.SetActive(true);
+        characterSelect.SetActive(false);
+        gameUI.SetActive(true);
+        ChangeCharacter();
+    }
+
+    public void ChangeCharacter()
+    {
+        player.playerMat.material.mainTexture = characters[characterIndex].texture;
+        player.anim.Play(movements[characterIndex] + "Movement");
+    }
 }

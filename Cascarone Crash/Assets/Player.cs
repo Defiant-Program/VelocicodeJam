@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] float moveSpeed;
 
-    [SerializeField] Animator anim;
+    [SerializeField] public Animator anim;
 
     [SerializeField] float wobbleSpeed;
 
@@ -50,6 +50,8 @@ public class Player : MonoBehaviour
 
     Vector3 prevMousePos;
     [SerializeField] Transform reticalSprite;
+
+    [SerializeField] public MeshRenderer playerMat;
 
     void Start()
     {
