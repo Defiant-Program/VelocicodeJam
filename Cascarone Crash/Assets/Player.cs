@@ -12,12 +12,16 @@ public class Player : MonoBehaviour
     [SerializeField] float wobbleSpeed;
 
     [SerializeField] int _ammo;
-    [SerializeField] int ammo { 
-        get { return _ammo; } 
-        set {
+    [SerializeField]
+    int ammo
+    {
+        get { return _ammo; }
+        set
+        {
             _ammo = value;
             GameController.GC.UpdateAmmo(_ammo);
-        } }
+        }
+    }
 
     [SerializeField] Transform cascaroneParent;
 
@@ -62,7 +66,7 @@ public class Player : MonoBehaviour
     {
         if (!dead)
         {
-            if(Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.Return))
             {
                 GameController.GC.OpenSettings();
             }
@@ -75,42 +79,47 @@ public class Player : MonoBehaviour
                 anim.speed = wobbleSpeed;
                 rb.velocity = Vector3.zero;
             }
-            if (PlayerPrefs.GetInt("MouseAim") == 0)
+            switch (PlayerPrefs.GetInt("MouseAim"))
             {
-                if (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.L))
-                {
-                    Aim();
-                }
-                if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space))
-                {
-                    if (Input.GetKey(KeyCode.I) || Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.K) || Input.GetKey(KeyCode.L))
+                case 0:
+                    if ((Input.mousePosition - prevMousePos).sqrMagnitude > 0.00001f)
+                    {
+                        MouseAim(Input.mousePosition - prevMousePos);
+                    }
+                    if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space))
+                    {
+                        if (ammo > 0)
+                        {
+                            Shoot();
+                        }
+                    }
+                    break;
+                case 1:
+                    if (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.L))
                     {
                         Aim();
                     }
-                    if (ammo > 0)
+                    if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space))
                     {
-                        Shoot();
+                        if (Input.GetKey(KeyCode.I) || Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.K) || Input.GetKey(KeyCode.L))
+                        {
+                            Aim();
+                        }
+                        if (ammo > 0)
+                        {
+                            Shoot();
+                        }
+                        else
+                        {
+                            //empty gun hammer click sfx
+                            //"No ammo" particle effect
+                        }
                     }
-                    else
-                    {
-                        //empty gun hammer click sfx
-                        //"No ammo" particle effect
-                    }
-                }
-            }
-            else
-            {
-                if ((Input.mousePosition - prevMousePos).sqrMagnitude > 0.00001f)
-                {
-                    MouseAim(Input.mousePosition - prevMousePos);
-                }
-                if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space))
-                {
-                    if (ammo > 0)
-                    {
-                        Shoot();
-                    }
-                }
+                    break;
+                
+                case 2: //Dual analog sticks
+                    Debug.Log("IMPLEMENT MEEEEE");
+                    break;
             }
         }
         else
@@ -132,7 +141,7 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-        
+
         Vector3 moveMe = Input.GetKey(KeyCode.W) ? Vector3.forward : Vector3.zero;
         moveMe += Input.GetKey(KeyCode.A) ? Vector3.left : Vector3.zero;
         moveMe += Input.GetKey(KeyCode.S) ? Vector3.back : Vector3.zero;
@@ -150,9 +159,9 @@ public class Player : MonoBehaviour
         moveRetical += Input.GetKey(KeyCode.L) ? Vector3.right : Vector3.zero;
 
         moveRetical.Normalize();
-        
+
         //retical.transform.localPosition = Vector3.MoveTowards(retical.transform.localPosition, moveRetical * reticalDistance, reticalSpeed * Time.deltaTime);
-        
+
         retical.transform.localPosition = moveRetical * reticalDistance;
 
     }
@@ -187,13 +196,18 @@ public class Player : MonoBehaviour
         retical.transform.rotation = Quaternion.Euler(Vector3.zero);
         reticalSprite.transform.localPosition = Vector3.zero;
         reticalSprite.rotation = Quaternion.Euler(Vector3.zero);
-        if (PlayerPrefs.GetInt("MouseAim") == 1) // mouse aim
+
+        switch (PlayerPrefs.GetInt("MouseAim"))
         {
-            reticalSprite.localPosition = Vector3.forward * 5;
-        }
-        else //keyboard aim
-        {
-            retical.transform.localPosition = Vector3.right * 5;
+            case 0: // mouse
+                reticalSprite.localPosition = Vector3.forward * 5;
+                break;
+            case 1: // keyboard
+                retical.transform.localPosition = Vector3.right * 5;
+                break;
+            case 2: //Dual analog sticks
+                Debug.Log("IMPLEMENT MEEEE");
+                break;
         }
     }
 
@@ -203,13 +217,15 @@ public class Player : MonoBehaviour
         {
             Cascarone cascarone = FindCascarone();
             cascarone.thrownBy = gameObject;
-            if (GameController.GC.mouseAim)
+            switch (GameController.GC.aimType)
             {
-                cascarone.trajectory = (reticalSprite.transform.position - retical.transform.position).normalized * 5;
-            }
-            else
-            {
-                cascarone.trajectory = (retical.transform.position - transform.position).normalized * 5;
+                case 0: // Mouse
+                case 2: // Dual Analog Sticks (functions the same here)
+                    cascarone.trajectory = (reticalSprite.transform.position - retical.transform.position).normalized * 5;
+                    break;
+                case 1: // Keyboard
+                    cascarone.trajectory = (retical.transform.position - transform.position).normalized * 5;
+                    break;
             }
             if (cascarone.trajectory == Vector3.zero)
                 cascarone.trajectory = Vector3.right * 5;
@@ -219,17 +235,19 @@ public class Player : MonoBehaviour
         }
     }
 
+
     Cascarone FindCascarone()
     {
-        foreach(Transform t in cascaroneParent)
+        foreach (Transform t in cascaroneParent)
         {
-            if(!t.gameObject.activeSelf)
+            if (!t.gameObject.activeSelf)
             {
                 return t.GetComponent<Cascarone>();
             }
         }
         return null;
     }
+
 
     public void Hurt(Vector3 collisionPoint)
     {
@@ -251,3 +269,4 @@ public class Player : MonoBehaviour
         GameController.GC.Lose();
     }
 }
+

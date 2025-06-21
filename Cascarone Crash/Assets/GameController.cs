@@ -33,19 +33,19 @@ public class GameController : MonoBehaviour
 
     [SerializeField] public Player player;
 
-    [SerializeField] public bool _mouseAim = true;
+    [SerializeField] public int _aimType = 1;
 
-    public bool mouseAim { get { return _mouseAim; } 
+    public int aimType { get { return _aimType; } 
         set {
-            _mouseAim = value;
-            PlayerPrefs.SetInt("MouseAim", value ? 1 : 0);
+            _aimType = value;
+            PlayerPrefs.SetInt("MouseAim", value);
             player.ChangeAim();
         } }
 
 
     [Header("Settings")]
     [SerializeField] GameObject settings;
-    [SerializeField] public Toggle mouseAimToggle;
+    [SerializeField] public TMP_Dropdown aimDropdown;
     [SerializeField] public Toggle mute;
 
     private void OnEnable()
@@ -58,8 +58,8 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mouseAim = PlayerPrefs.GetInt("MouseAim") == 1;
-        mouseAimToggle.isOn = PlayerPrefs.GetInt("MouseAim") == 1;
+        aimType = PlayerPrefs.GetInt("MouseAim");
+        aimDropdown.value = PlayerPrefs.GetInt("MouseAim");
         enemyCount = enemyParent.childCount;
         enemyCountText.text = "Enemies Remaining: " + enemyCount;
     }
@@ -114,10 +114,10 @@ public class GameController : MonoBehaviour
         Time.timeScale = 0;
     }
 
-    public void MouseToggle()
+    public void AimToggle()
     {
-        mouseAim = mouseAimToggle.isOn;
-        Debug.Log(mouseAim);
+        aimType = aimDropdown.value;
+        Debug.Log(aimType);
     }
 
     public void MuteToggle()
