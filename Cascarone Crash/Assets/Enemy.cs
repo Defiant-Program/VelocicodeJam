@@ -120,6 +120,10 @@ public class Enemy : MonoBehaviour
                 Shoot();
             }
         }
+        if(dead)
+        {
+            transform.Rotate(Vector3.forward * Time.deltaTime * 135);
+        }
     }
 
     public void Hurt(GameObject thrownBy, Vector3 collisionPoint)
@@ -141,7 +145,7 @@ public class Enemy : MonoBehaviour
         agent.enabled = false;
         dead = true;
         transform.parent = GameController.GC.deadEnemiesParent;
-        rb.AddForce((transform.position - collisionPoint) * 50 + Vector3.up* 4, ForceMode.Impulse);
+        rb.AddForce((transform.position - collisionPoint) * 25 + Vector3.up* 4, ForceMode.Impulse);
 
         if (killedBy)
         {
