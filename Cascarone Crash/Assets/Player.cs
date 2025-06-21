@@ -44,11 +44,17 @@ public class Player : MonoBehaviour
         }
     }
 
+    Vector3 prevMousePos;
+    [SerializeField] Transform reticalSprite;
+
     void Start()
     {
         anim.speed = wobbleSpeed;
         rb = GetComponent<Rigidbody>();
         tr = GetComponent<TrailRenderer>();
+
+        ChangeAim();
+
     }
 
     // Update is called once per frame
@@ -56,6 +62,10 @@ public class Player : MonoBehaviour
     {
         if (!dead)
         {
+            if(Input.GetKeyDown(KeyCode.Return))
+            {
+                GameController.GC.OpenSettings();
+            }
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
                 Move();
@@ -65,32 +75,49 @@ public class Player : MonoBehaviour
                 anim.speed = wobbleSpeed;
                 rb.velocity = Vector3.zero;
             }
-            if (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.L))
+            if (PlayerPrefs.GetInt("MouseAim") == 0)
             {
-                Aim();
-            }
-            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space))
-            {
-                if (Input.GetKey(KeyCode.I) || Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.K) || Input.GetKey(KeyCode.L))
+                if (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.L))
                 {
                     Aim();
                 }
-                if (ammo > 0)
+                if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space))
                 {
-                    Shoot();
-                }
-                else
-                {
-                    //empty gun hammer click sfx
-                    //"No ammo" particle effect
+                    if (Input.GetKey(KeyCode.I) || Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.K) || Input.GetKey(KeyCode.L))
+                    {
+                        Aim();
+                    }
+                    if (ammo > 0)
+                    {
+                        Shoot();
+                    }
+                    else
+                    {
+                        //empty gun hammer click sfx
+                        //"No ammo" particle effect
+                    }
                 }
             }
-
+            else
+            {
+                if ((Input.mousePosition - prevMousePos).sqrMagnitude > 0.00001f)
+                {
+                    MouseAim(Input.mousePosition - prevMousePos);
+                }
+                if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Space))
+                {
+                    if (ammo > 0)
+                    {
+                        Shoot();
+                    }
+                }
+            }
         }
         else
         {
             Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 10, Time.deltaTime * 2);
         }
+        prevMousePos = Input.mousePosition;
     }
 
     public void GetAmmo(int ammount)
@@ -130,13 +157,60 @@ public class Player : MonoBehaviour
 
     }
 
+    void MouseAim(Vector3 newReticalPos)
+    {
+
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero); // Y = 0 plane
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (groundPlane.Raycast(ray, out float enter))
+        {
+            Vector3 hitPoint = ray.GetPoint(enter);
+            Vector3 direction = hitPoint - transform.position;
+
+            // Optional: flatten the direction if necessary
+            direction.y = 0;
+
+            if (direction != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                retical.transform.rotation = targetRotation;
+            }
+        }
+
+    }
+
+    public void ChangeAim()
+    {
+        Debug.Log(PlayerPrefs.GetInt("MouseAim"));
+        retical.transform.localPosition = Vector3.zero;
+        retical.transform.rotation = Quaternion.Euler(Vector3.zero);
+        reticalSprite.transform.localPosition = Vector3.zero;
+        reticalSprite.rotation = Quaternion.Euler(Vector3.zero);
+        if (PlayerPrefs.GetInt("MouseAim") == 1) // mouse aim
+        {
+            reticalSprite.localPosition = Vector3.forward * 5;
+        }
+        else //keyboard aim
+        {
+            retical.transform.localPosition = Vector3.right * 5;
+        }
+    }
+
     void Shoot()
     {
         if (Time.timeScale >= 1)
         {
             Cascarone cascarone = FindCascarone();
             cascarone.thrownBy = gameObject;
-            cascarone.trajectory = (retical.transform.position - transform.position).normalized * 5;
+            if (GameController.GC.mouseAim)
+            {
+                cascarone.trajectory = (reticalSprite.transform.position - retical.transform.position).normalized * 5;
+            }
+            else
+            {
+                cascarone.trajectory = (retical.transform.position - transform.position).normalized * 5;
+            }
             if (cascarone.trajectory == Vector3.zero)
                 cascarone.trajectory = Vector3.right * 5;
             cascarone.transform.position = transform.position + Vector3.up * 1.33f + (cascarone.trajectory.normalized * 3);

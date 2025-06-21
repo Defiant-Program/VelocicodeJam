@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -32,6 +33,21 @@ public class GameController : MonoBehaviour
 
     [SerializeField] public Player player;
 
+    [SerializeField] public bool _mouseAim = true;
+
+    public bool mouseAim { get { return _mouseAim; } 
+        set {
+            _mouseAim = value;
+            PlayerPrefs.SetInt("MouseAim", value ? 1 : 0);
+            player.ChangeAim();
+        } }
+
+
+    [Header("Settings")]
+    [SerializeField] GameObject settings;
+    [SerializeField] public Toggle mouseAimToggle;
+    [SerializeField] public Toggle mute;
+
     private void OnEnable()
     {
         if (GC == null)
@@ -42,6 +58,8 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        mouseAim = PlayerPrefs.GetInt("MouseAim") == 1;
+        mouseAimToggle.isOn = PlayerPrefs.GetInt("MouseAim") == 1;
         enemyCount = enemyParent.childCount;
         enemyCountText.text = "Enemies Remaining: " + enemyCount;
     }
@@ -55,8 +73,7 @@ public class GameController : MonoBehaviour
         enemyCountText.text = "Enemies Remaining: " + enemyCount;
         if(enemyCount == 0)
         {
-            winScreen.SetActive(true);
-            Time.timeScale = 0;
+            Win();
         }
     }
 
@@ -84,9 +101,44 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    public void Win()
+    {
+        CloseSettings();
+        winScreen.SetActive(true);
+        Time.timeScale = 0;
+    }
     public void Lose()
     {
+        CloseSettings();
         loseScreen.SetActive(true);
         Time.timeScale = 0;
     }
+
+    public void MouseToggle()
+    {
+        mouseAim = mouseAimToggle.isOn;
+        Debug.Log(mouseAim);
+    }
+
+    public void MuteToggle()
+    {
+        //does nothing lol
+    }
+
+    public void OpenSettings()
+    {
+        if (!settings.activeSelf)
+        {
+            settings.SetActive(true);
+            Time.timeScale = 0;
+        }
+        else
+            CloseSettings();
+    }
+    public void CloseSettings()
+    {
+        settings.SetActive(false);
+        Time.timeScale = 1;
+    }
+
 }

@@ -39,7 +39,6 @@ public class Cascarone : MonoBehaviour
     {
         transform.position += trajectory * Time.deltaTime * shotSpeed;
 
-        Debug.Log(Mathf.Sin((currentLifeSpan / lifeSpan) * Mathf.PI));
         transform.GetChild(0).localPosition = (Vector3.up * Mathf.Sin((currentLifeSpan / lifeSpan) * Mathf.PI) * 3) + Vector3.up;
 
         currentLifeSpan += Time.deltaTime;

@@ -58,9 +58,7 @@ public class Enemy : MonoBehaviour
         anim.speed = wobbleSpeed;
 
         Player = GameObject.Find("Player Controller");
-        Debug.Log(Player);
         cascaroneParent = GameObject.Find("Cascarones").transform;
-        Debug.Log(cascaroneParent);
         rb = GetComponent<Rigidbody>();
 
         ChangeTarget();
