@@ -134,9 +134,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb8fb7b811e03744814a43f863a1228, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftLookingMax: -30
-  rightLookingMax: 30
-  rotationSpeed: 2.5
+  leftLookingMax: -15
+  rightLookingMax: 15
+  rotationSpeed: 5
 --- !u!54 &3639754314555671897
 Rigidbody:
   m_ObjectHideFlags: 0

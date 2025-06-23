@@ -218,6 +218,11 @@ public class Player : MonoBehaviour
         if (Time.timeScale >= 1)
         {
             Cascarone cascarone = FindCascarone();
+            cascarone.thrownByPlayer = true;
+            MaterialPropertyBlock test = new MaterialPropertyBlock();
+            cascarone.sr.GetPropertyBlock(test);
+            test.SetTexture("_DecorTex", GameController.GC.GetEggTexture(ammo));
+            cascarone.sr.SetPropertyBlock(test);
             cascarone.thrownBy = gameObject;
             switch (GameController.GC.aimType)
             {

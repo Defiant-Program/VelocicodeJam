@@ -57,6 +57,12 @@ public class GameController : MonoBehaviour
 
     [SerializeField] GameObject gameUI;
 
+    [SerializeField] Texture2D[] textures;
+
+    [SerializeField] public Image[] ammoEggs;
+
+    public int eggIndex = 0;
+
     private void OnEnable()
     {
         if (GC == null)
@@ -69,7 +75,7 @@ public class GameController : MonoBehaviour
         characterIndex = PlayerPrefs.GetInt("Character");
         previewCharacter.sprite = characters[characterIndex];
 
-        Time.timeScale = 1;
+        Time.timeScale = 0;
     }
 
     // Start is called before the first frame update
@@ -79,6 +85,11 @@ public class GameController : MonoBehaviour
         aimDropdown.value = PlayerPrefs.GetInt("MouseAim");
         enemyCount = enemyParent.childCount;
         enemyCountText.text = "Enemies Remaining: " + enemyCount;
+
+        foreach(Image i in ammoEggs)
+        {
+            i.material.SetTexture("_DecorTex", textures[Random.Range(0, textures.Length - 1)]);
+        }
     }
 
     // Update is called once per frame
@@ -96,14 +107,29 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void UpdateAmmo(int ammount)
+    public void UpdateAmmo(int amount)
     {
-        ammoText.text = "Ammo: " + ammount;
+        eggIndex = Mathf.Min(amount, 12);
+        ammoText.text = "Ammo: " + amount;
+        for (int i = 0; i < 12; i++)
+        {
+            int index = i;
+            if (index >= eggIndex)
+                ammoEggs[index].gameObject.SetActive(false);
+            else
+            {
+                if (!ammoEggs[index].gameObject.activeSelf)
+                {
+                    ammoEggs[index].material.SetTexture("_DecorTex", textures[Random.Range(0, textures.Length - 1)]);
+                    ammoEggs[index].gameObject.SetActive(true);
+                }
+            }
+        }
     }
 
-    public void UpdateGold(int ammount)
+    public void UpdateGold(int amount)
     {
-        medalsText.text = "Medals: " + ammount;
+        medalsText.text = "Medals: " + amount;
     }
 
     public void Restart()
@@ -183,6 +209,7 @@ public class GameController : MonoBehaviour
         enemyParent.gameObject.SetActive(true);
         characterSelect.SetActive(false);
         gameUI.SetActive(true);
+        Time.timeScale = 1;
         ChangeCharacter();
     }
 
@@ -190,5 +217,15 @@ public class GameController : MonoBehaviour
     {
         player.playerMat.material.mainTexture = characters[characterIndex].texture;
         player.anim.Play(movements[characterIndex] + "Movement");
+    }
+
+    public Texture GetEggTexture(int ammo)
+    {
+        if(ammo > ammoEggs.Length)
+        {
+            return textures[Random.Range(0, textures.Length - 1)];
+        }
+        else
+            return ammoEggs[ammo-1].material.GetTexture("_DecorTex");
     }
 }
