@@ -49,6 +49,10 @@ public class Enemy : MonoBehaviour
 
     float shootingTimer = 0;
 
+    [Header("Death Related Variables")]
+    [SerializeField] bool dontLaunch;
+    [SerializeField] float deathSpinSpeed = 135;
+
     void Start()
     {
         enemyID = transform.GetSiblingIndex();
@@ -122,7 +126,7 @@ public class Enemy : MonoBehaviour
         }
         if(dead)
         {
-            transform.Rotate(Vector3.forward * Time.deltaTime * 135);
+            transform.Rotate(Vector3.forward * Time.deltaTime * deathSpinSpeed);
         }
     }
 
@@ -145,7 +149,9 @@ public class Enemy : MonoBehaviour
         agent.enabled = false;
         dead = true;
         transform.parent = GameController.GC.deadEnemiesParent;
-        rb.AddForce((transform.position - collisionPoint) * 25 + Vector3.up* 4, ForceMode.Impulse);
+
+        if(!dontLaunch)
+            rb.AddForce((transform.position - collisionPoint) * 25 + Vector3.up* 4, ForceMode.Impulse);
 
         if (killedBy)
         {
