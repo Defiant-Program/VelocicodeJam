@@ -91,6 +91,8 @@ MonoBehaviour:
   enemyRenderer: {fileID: 6608123190521932679}
   visionDistance: 15
   medal: {fileID: 4563316726410113968, guid: 538198346ec602544a29cc03dfe1859a, type: 3}
+  dontLaunch: 1
+  deathSpinSpeed: 135
 --- !u!136 &4866409132378255880
 CapsuleCollider:
   m_ObjectHideFlags: 0
