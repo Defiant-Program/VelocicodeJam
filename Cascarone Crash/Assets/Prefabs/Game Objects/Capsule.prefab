@@ -294,6 +294,7 @@ MonoBehaviour:
   trajectory: {x: 0, y: 0, z: 0}
   mr: {fileID: 0}
   sr: {fileID: 8494520569127724643}
+  rb: {fileID: 7229553545626771793}
   lifeSpan: 1
   shotSpeed: 2.5
   textures:

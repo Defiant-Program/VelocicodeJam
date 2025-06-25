@@ -10,6 +10,8 @@ public class Cascarone : MonoBehaviour
 
     [SerializeField] MeshRenderer mr;
     [SerializeField] public SpriteRenderer sr;
+    [SerializeField] public Rigidbody rb;
+
     CapsuleCollider cc;
 
     [SerializeField] float lifeSpan = 3.5f;
@@ -20,13 +22,16 @@ public class Cascarone : MonoBehaviour
     [SerializeField] public Texture2D[] textures;
 
     public bool thrownByPlayer;
-
+    bool popped = false;
     void OnEnable()
     {
+        popped = false;
         if (mr)
             mr.enabled = true;
         if (cc)
             cc.enabled = true;
+        if(rb)
+            rb.isKinematic = false;
         transform.SetAsLastSibling();
         Invoke("DisableSelf", lifeSpan);
         if (trajectory == Vector3.zero)
@@ -89,25 +94,35 @@ public class Cascarone : MonoBehaviour
                     collision.gameObject.GetComponent<Enemy>().Hurt(thrownBy, contact.point);
                     sr.enabled = false;
                     cc.enabled = false;
+                    rb.isKinematic = true;
+                    GameController.GC.confettiPop.EmitFromCascarone(transform.position, trajectory);
                 }
                 else if (contact.otherCollider.gameObject.tag == "Player")
                 {
                     collision.gameObject.GetComponent<Player>().Hurt(contact.point);
                     sr.enabled = false;
                     cc.enabled = false;
+                    rb.isKinematic = true;
+                    GameController.GC.confettiPop.EmitFromCascarone(transform.position, trajectory);
+
                 }
                 else
                 {
-                    Debug.Log(contact.otherCollider.name);
+                    GameController.GC.confettiPop.EmitFromCascarone(transform.position, trajectory);
                 }
             }
             sr.enabled = false;
             cc.enabled = false;
+            rb.isKinematic = true;
+            popped = true;
         }
     }
 
     void DisableSelf()
     {
+        if(!popped)
+            GameController.GC.confettiPop.EmitFromCascarone(transform.position, trajectory);
+
         gameObject.SetActive(false);
     }
     

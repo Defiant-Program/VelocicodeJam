@@ -89,10 +89,26 @@ MonoBehaviour:
   rb: {fileID: 0}
   tr: {fileID: 0}
   enemyRenderer: {fileID: 6608123190521932679}
+  movements:
+  - Dog
+  - Rat
+  - Cat
+  - Bird
+  - Hedgehog
+  - Armadillo
+  - Hare
   visionDistance: 15
   medal: {fileID: 4563316726410113968, guid: 538198346ec602544a29cc03dfe1859a, type: 3}
   dontLaunch: 0
   deathSpinSpeed: 1500
+  ouchies:
+  - {fileID: 2800000, guid: 81221ca4307b14d48991d5acf340dca5, type: 3}
+  - {fileID: 2800000, guid: b8b0d1652198fc44595f4efbc6b427b3, type: 3}
+  - {fileID: 2800000, guid: ca0a5e6ff23a0eb4bac54dc086779a5a, type: 3}
+  - {fileID: 2800000, guid: 78fc2287c26306b40b4790aafb6b532d, type: 3}
+  - {fileID: 2800000, guid: 43cf240574152e2448838193b5e174e3, type: 3}
+  - {fileID: 2800000, guid: 6558ae9dcae83a24fa6d65d7b2f6b36c, type: 3}
+  - {fileID: 2800000, guid: 8a1426674171e1e47bd7cf0200d70675, type: 3}
 --- !u!136 &4866409132378255880
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -112,7 +128,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.59
+  m_Radius: 3.6
   m_Height: 3.19
   m_Direction: 1
   m_Center: {x: 0, y: 0.09, z: 0}
@@ -125,15 +141,15 @@ NavMeshAgent:
   m_GameObject: {fileID: 856068884127851}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Radius: 2.75
+  m_Speed: 5
+  m_Acceleration: 3
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
-  m_AutoRepath: 0
+  m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1.63
   m_WalkableMask: 4294967295

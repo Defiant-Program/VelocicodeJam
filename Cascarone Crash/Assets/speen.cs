@@ -5,31 +5,26 @@ using UnityEngine;
 public class speen : MonoBehaviour
 {
     [SerializeField] bool ammo = true;
+    [SerializeField] bool powerup = false;
+    Vector3 startPos;
     // Start is called before the first frame update
     void Start()
     {
-        
+        startPos = transform.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.Rotate(Vector3.up * Time.deltaTime * 35);
+        transform.localPosition = startPos + Mathf.Sin(Time.time * 2) * Vector3.up;
     }
 
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
         {
-            if (ammo)
-            {
-                other.GetComponent<Player>().GetAmmo(6);
-            }
-            else
-            {
-                other.GetComponent<Player>().GetGold(1);
-            }
-            Destroy(gameObject);
+            PickUpStuff(other);
         }    
     }
 
@@ -37,8 +32,24 @@ public class speen : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<Player>().GetAmmo(6);
-            Destroy(gameObject);
+            PickUpStuff(collision.collider);
         }
+    }
+
+    void PickUpStuff(Collider other)
+    {
+        if (ammo)
+        {
+            other.GetComponent<Player>().GetAmmo(6);
+        }
+        else if(powerup)
+        {
+            other.GetComponent<Player>().GetArmored();
+        }
+        else
+        {
+            other.GetComponent<Player>().GetGold(1);
+        }
+        Destroy(gameObject);
     }
 }

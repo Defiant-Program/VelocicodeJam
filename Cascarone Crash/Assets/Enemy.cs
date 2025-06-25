@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] MeshRenderer enemyRenderer;
     int enemyType;
 
-    string[] movements = { "Man", "Dog", "Rat", "Cat", "Bird" };
+    public string[] movements = { "Dog", "Rat", "Cat", "Bird", "Hedgehog", "Armadillo", "Hare" };
 
     bool chasing = false;
     bool shooting = false;
@@ -53,12 +53,22 @@ public class Enemy : MonoBehaviour
     [SerializeField] bool dontLaunch;
     [SerializeField] float deathSpinSpeed = 135;
 
+    [SerializeField] Texture[] ouchies;
+
+    Vector3 prevPos;
+
     void Start()
     {
         enemyID = transform.GetSiblingIndex();
 
         enemyType = Random.Range(0, GameController.GC.mats.Length);
-        enemyRenderer.material = GameController.GC.mats[enemyType];
+
+        MaterialPropertyBlock test = new MaterialPropertyBlock();
+        enemyRenderer.GetPropertyBlock(test);
+        test.SetTexture("_MainTex", GameController.GC.characters[enemyType].texture);
+
+        enemyRenderer.SetPropertyBlock(test);
+
         anim.speed = wobbleSpeed;
 
         Player = GameObject.Find("Player Controller");
@@ -87,6 +97,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (!dead)
             enemyRenderer.material.color = Color.white + Color.red * shootingTimer;
 
@@ -130,12 +141,28 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        if (agent.velocity.x < 0) //moving left
+        {
+            anim.transform.localScale = Vector3.right + Vector3.up + Vector3.forward;
+        }
+        else
+        {
+            anim.transform.localScale = Vector3.left + Vector3.up + Vector3.forward;
+        }
+    }
+
     public void Hurt(GameObject thrownBy, Vector3 collisionPoint)
     {        
         killedBy = thrownBy;
         HP--;
         if (HP == 0 && !dead)
         {
+            MaterialPropertyBlock test = new MaterialPropertyBlock();
+            enemyRenderer.GetPropertyBlock(test);
+            test.SetTexture("_MainTex", ouchies[enemyType]);
+            enemyRenderer.SetPropertyBlock(test);
             Die(collisionPoint);
         }
     }

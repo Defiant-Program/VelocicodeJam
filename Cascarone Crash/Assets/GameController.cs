@@ -64,7 +64,7 @@ public class GameController : MonoBehaviour
     [SerializeField] GameObject characterSelect;
     int characterIndex;
 
-    string[] movements = { "Man", "Bird", "Cat", "Dog", "Rat" };
+    public string[] movements = { "Bird", "Cat", "Dog", "Rat", "Hedgehog", "Armadillo", "Hare" };
     [SerializeField] Image previewCharacter;
 
     [SerializeField] GameObject gameUI;
@@ -78,6 +78,11 @@ public class GameController : MonoBehaviour
     [SerializeField] compass theCompass;
 
     [SerializeField] GameObject creditsPage;
+
+    [SerializeField] GameObject armoredIcon;
+
+    public ParticleSystemPool confettiPop;
+
     private void OnEnable()
     {
         if (GC == null)
@@ -259,5 +264,14 @@ public class GameController : MonoBehaviour
     {
         settings.SetActive(true);
         creditsPage.SetActive(false);
+    }
+
+    public void ShowArmoredIcon()
+    {
+        armoredIcon.SetActive(true);
+    }
+    public void HideArmoredIcon()
+    {
+        armoredIcon.SetActive(false);
     }
 }

@@ -57,6 +57,20 @@ public class Player : MonoBehaviour
 
     public Transform targetArrow;
 
+    bool _armored;
+    bool armored { get { return _armored; } set { _armored = value;
+            if(value)
+                GameController.GC.ShowArmoredIcon();
+            else
+                GameController.GC.HideArmoredIcon();
+        }
+    }
+
+    float hurtCooldown = 0;
+
+    Vector3 prevPos;
+    [SerializeField] Texture[] ouchies;
+
     void Start()
     {
         anim.speed = wobbleSpeed;
@@ -138,6 +152,21 @@ public class Player : MonoBehaviour
             anim.speed = wobbleSpeed;
             rb.velocity = Vector3.zero;
         }
+
+        if (hurtCooldown > 0)
+        {
+            hurtCooldown--;
+
+            if (hurtCooldown % 10 == 0)
+            {
+                Flicker();
+            }
+        }
+        else
+        {
+            anim.gameObject.SetActive(true);
+        }
+
     }
 
     public void GetAmmo(int ammount)
@@ -169,6 +198,15 @@ public class Player : MonoBehaviour
         {
             cc.Move(moveMe * moveSpeed * Time.deltaTime);
         }
+        if (moveMe.x < 0) // moving left
+        {
+            anim.transform.localScale = Vector3.right + Vector3.up + Vector3.forward;
+        }
+        else if (moveMe.x > 0)
+        {
+            anim.transform.localScale = Vector3.left + Vector3.up + Vector3.forward;
+        }
+        prevPos = transform.position;
     }
     void Aim()
     {
@@ -210,7 +248,6 @@ public class Player : MonoBehaviour
 
     public void ChangeAim()
     {
-        Debug.Log(PlayerPrefs.GetInt("MouseAim"));
         retical.transform.localPosition = Vector3.zero;
         retical.transform.rotation = Quaternion.Euler(Vector3.zero);
         reticalSprite.transform.localPosition = Vector3.zero;
@@ -275,17 +312,43 @@ public class Player : MonoBehaviour
 
     public void Hurt(Vector3 collisionPoint)
     {
-        HP--;
-        if (HP == 0)
+        if (hurtCooldown <= 0)
         {
-            dead = true;
-            tr.enabled = true;
-            gameObject.layer = 11;
-            GetComponent<CapsuleCollider>().enabled = false;
-            rb.AddForce((transform.position - collisionPoint) * 50 + Vector3.up * 4, ForceMode.Impulse);
+            hurtCooldown = 60f;
+            if (armored)
+            {
+                Debug.Log("haha I win");
+                armored = false;
+            }
+            else
+            {
+                Debug.Log("wait what");
+                HP--;
+                if (HP == 0)
+                {
+                    playerMat.material.mainTexture = ouchies[PlayerPrefs.GetInt("Character")];
 
-            Invoke("Lose", 0.5f);
+                    dead = true;
+                    tr.enabled = true;
+                    gameObject.layer = 11;
+                    GetComponent<CapsuleCollider>().enabled = false;
+                    cc.enabled = false;
+                    rb.AddForce((transform.position - collisionPoint) * 50 + Vector3.up * 4, ForceMode.Impulse);
+
+                    Invoke("Lose", 0.5f);
+                }
+            }
         }
+    }
+
+    public void GetArmored()
+    {
+        armored = true;
+    }
+
+    void Flicker()
+    {
+        anim.gameObject.SetActive(!anim.gameObject.activeSelf);
     }
 
     void Lose()
