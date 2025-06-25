@@ -4,10 +4,20 @@ using UnityEngine;
 
 public class speen : MonoBehaviour
 {
+    [Header("Don't touch these 2")]
     [SerializeField] bool ammo = true;
     [SerializeField] bool powerup = false;
     Vector3 startPos;
     // Start is called before the first frame update
+
+    [Header("Ignore if not looking at Egg Carton")]
+    [SerializeField] AudioClip ammoRefill;
+    [Header("Ignore if not looking at PowerUp")]
+    [SerializeField] AudioClip getArmor;
+    [Header("Ignore if not looking at Medal")]
+    [SerializeField] AudioClip getMedal;
+
+
     void Start()
     {
         startPos = transform.localPosition;
@@ -41,14 +51,17 @@ public class speen : MonoBehaviour
         if (ammo)
         {
             other.GetComponent<Player>().GetAmmo(6);
+            GameController.GC.player.SFX.PlayOneShot(ammoRefill);
         }
         else if(powerup)
         {
             other.GetComponent<Player>().GetArmored();
+            GameController.GC.player.SFX.PlayOneShot(getArmor);
         }
         else
         {
             other.GetComponent<Player>().GetGold(1);
+            GameController.GC.player.SFX.PlayOneShot(getMedal);
         }
         Destroy(gameObject);
     }

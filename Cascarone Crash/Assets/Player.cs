@@ -71,6 +71,11 @@ public class Player : MonoBehaviour
     Vector3 prevPos;
     [SerializeField] Texture[] ouchies;
 
+    [SerializeField] public AudioSource BGM;
+    [SerializeField] public AudioSource SFX;
+
+    [SerializeField] AudioClip throwEggSFX;
+
     void Start()
     {
         anim.speed = wobbleSpeed;
@@ -79,6 +84,9 @@ public class Player : MonoBehaviour
         cc = GetComponent<CharacterController>();
 
         ChangeAim();
+
+
+        Debug.Log(BGM.isPlaying);
 
     }
 
@@ -292,6 +300,7 @@ public class Player : MonoBehaviour
                 cascarone.trajectory = Vector3.right * 5;
             cascarone.transform.position = transform.position + Vector3.up * 1.33f + (cascarone.trajectory.normalized * 3);
             cascarone.gameObject.SetActive(true);
+            SFX.PlayOneShot(throwEggSFX);
             GetAmmo(-1);
         }
     }

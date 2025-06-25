@@ -57,6 +57,8 @@ public class Enemy : MonoBehaviour
 
     Vector3 prevPos;
 
+    [SerializeField] AudioSource deathZoomNoise;
+
     void Start()
     {
         enemyID = transform.GetSiblingIndex();
@@ -159,6 +161,8 @@ public class Enemy : MonoBehaviour
         HP--;
         if (HP == 0 && !dead)
         {
+            deathZoomNoise.Play();
+
             MaterialPropertyBlock test = new MaterialPropertyBlock();
             enemyRenderer.GetPropertyBlock(test);
             test.SetTexture("_MainTex", ouchies[enemyType]);
