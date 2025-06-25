@@ -12,7 +12,19 @@ public class GameController : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI enemyCountText;
     [SerializeField] public Transform enemyParent;
-    int enemyCount;
+    int _enemyCount;
+    int enemyCount
+    {
+        get { return _enemyCount; }
+        set
+        {
+            if (_enemyCount != value)
+            {
+                ChangeTarget();
+            }
+            _enemyCount = value;
+        }
+    }
 
     [SerializeField] TextMeshProUGUI ammoText;
     [SerializeField] TextMeshProUGUI medalsText;
@@ -63,6 +75,9 @@ public class GameController : MonoBehaviour
 
     public int eggIndex = 0;
 
+    [SerializeField] compass theCompass;
+
+    [SerializeField] GameObject creditsPage;
     private void OnEnable()
     {
         if (GC == null)
@@ -101,6 +116,7 @@ public class GameController : MonoBehaviour
             Time.timeScale = newTimescale;
         enemyCount = enemyParent.childCount;
         enemyCountText.text = "Enemies Remaining: " + enemyCount;
+
         if(enemyCount == 0)
         {
             Win();
@@ -227,5 +243,21 @@ public class GameController : MonoBehaviour
         }
         else
             return ammoEggs[ammo-1].material.GetTexture("_DecorTex");
+    }
+
+    void ChangeTarget()
+    {
+        theCompass.target = enemyParent.GetChild(Random.Range(0, enemyParent.childCount - 1));
+    }
+
+    public void ShowCredits()
+    {
+        settings.SetActive(false);
+        creditsPage.SetActive(true);
+    }
+    public void CloseCredits()
+    {
+        settings.SetActive(true);
+        creditsPage.SetActive(false);
     }
 }

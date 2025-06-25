@@ -55,6 +55,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] public CharacterController cc;
 
+    public Transform targetArrow;
+
     void Start()
     {
         anim.speed = wobbleSpeed;
@@ -158,7 +160,15 @@ public class Player : MonoBehaviour
         moveMe.Normalize();
         anim.speed = 0.5f + Mathf.Abs(moveMe.x * wobbleSpeed) + Mathf.Abs(moveMe.z * wobbleSpeed);
         //transform.position += moveMe * moveSpeed * Time.deltaTime;
-        cc.Move(moveMe * moveSpeed * Time.deltaTime);
+
+        if (Input.GetKey(KeyCode.LeftShift)) //run
+        {
+            cc.Move(moveMe * moveSpeed * 2 * Time.deltaTime);
+        }
+        else //walk
+        {
+            cc.Move(moveMe * moveSpeed * Time.deltaTime);
+        }
     }
     void Aim()
     {
