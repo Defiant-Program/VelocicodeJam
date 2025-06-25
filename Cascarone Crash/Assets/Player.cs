@@ -53,11 +53,14 @@ public class Player : MonoBehaviour
 
     [SerializeField] public MeshRenderer playerMat;
 
+    [SerializeField] public CharacterController cc;
+
     void Start()
     {
         anim.speed = wobbleSpeed;
         rb = GetComponent<Rigidbody>();
         tr = GetComponent<TrailRenderer>();
+        cc = GetComponent<CharacterController>();
 
         ChangeAim();
 
@@ -72,15 +75,7 @@ public class Player : MonoBehaviour
             {
                 GameController.GC.OpenSettings();
             }
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
-            {
-                Move();
-            }
-            else
-            {
-                anim.speed = wobbleSpeed;
-                rb.velocity = Vector3.zero;
-            }
+
             switch (PlayerPrefs.GetInt("MouseAim"))
             {
                 case 0:
@@ -130,6 +125,18 @@ public class Player : MonoBehaviour
         }
         prevMousePos = Input.mousePosition;
     }
+    private void FixedUpdate()
+    {
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {
+            Move();
+        }
+        else
+        {
+            anim.speed = wobbleSpeed;
+            rb.velocity = Vector3.zero;
+        }
+    }
 
     public void GetAmmo(int ammount)
     {
@@ -151,7 +158,7 @@ public class Player : MonoBehaviour
         moveMe.Normalize();
         anim.speed = 0.5f + Mathf.Abs(moveMe.x * wobbleSpeed) + Mathf.Abs(moveMe.z * wobbleSpeed);
         //transform.position += moveMe * moveSpeed * Time.deltaTime;
-        rb.MovePosition(rb.position + moveMe * moveSpeed * Time.deltaTime);
+        cc.Move(moveMe * moveSpeed * Time.deltaTime);
     }
     void Aim()
     {
