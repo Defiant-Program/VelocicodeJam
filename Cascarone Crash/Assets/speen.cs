@@ -40,10 +40,5 @@ public class speen : MonoBehaviour
             collision.gameObject.GetComponent<Player>().GetAmmo(6);
             Destroy(gameObject);
         }
-        else if (collision.gameObject.tag == "Enemy")
-        {
-            //Enemies have unlimited ammo
-            Destroy(gameObject);
-        }
     }
 }
