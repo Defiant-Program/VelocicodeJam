@@ -89,6 +89,8 @@ public class GameController : MonoBehaviour
     bool _begin = false;
     public bool begin { get { return _begin; } set { _begin = value; if (value) player.retical.SetActive(true); } }
 
+    [SerializeField] GameObject howToPlayPage;
+
     private void OnEnable()
     {
         if (GC == null)
@@ -283,6 +285,16 @@ public class GameController : MonoBehaviour
         AudioListener.volume = 1 - AudioListener.volume;
     }
 
+    public void ShowHowToPlay()
+    {
+        settings.SetActive(false);
+        howToPlayPage.SetActive(true);
+    }
+    public void CloseHowToPlay()
+    {
+        settings.SetActive(true);
+        howToPlayPage.SetActive(false);
+    }
     public void CloseGame()
     {
         Application.Quit();
