@@ -28,6 +28,9 @@ public class AmmoSpawner : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!GameController.GC.begin)
+            return;
+
         eggSpawnTimer++;
         if (eggSpawnTimer > 300)
             SpawnAmmo();

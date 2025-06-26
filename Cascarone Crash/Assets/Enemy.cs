@@ -59,6 +59,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] AudioSource deathZoomNoise;
 
+
     void Start()
     {
         enemyID = transform.GetSiblingIndex();
@@ -99,6 +100,8 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!GameController.GC.begin)
+            return;
 
         if (!dead)
             enemyRenderer.material.color = Color.white + Color.red * shootingTimer;

@@ -8,7 +8,7 @@ public class CheckSource : MonoBehaviour
 
     void Start()
     {
-        if(platform == RuntimePlatform.WebGLPlayer)
+        if(platform != RuntimePlatform.WindowsPlayer || platform != RuntimePlatform.OSXPlayer)
         {
             gameObject.SetActive(false);
         }

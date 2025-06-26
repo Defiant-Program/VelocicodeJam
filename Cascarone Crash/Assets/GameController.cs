@@ -86,6 +86,9 @@ public class GameController : MonoBehaviour
     [SerializeField] AudioClip winSound;
     [SerializeField] AudioClip loseSound;
 
+    bool _begin = false;
+    public bool begin { get { return _begin; } set { _begin = value; if (value) player.retical.SetActive(true); } }
+
     private void OnEnable()
     {
         if (GC == null)

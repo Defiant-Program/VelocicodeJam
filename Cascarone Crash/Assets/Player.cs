@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] int HP = 1;
 
-    [SerializeField] GameObject retical;
+    [SerializeField] public GameObject retical;
     [SerializeField] float reticalSpeed;
     [SerializeField] float reticalDistance;
 
@@ -87,14 +88,14 @@ public class Player : MonoBehaviour
 
         ChangeAim();
 
-
-        Debug.Log(BGM.isPlaying);
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!GameController.GC.begin)
+            return;
+
         if (!dead)
         {
             if (Input.GetKeyDown(KeyCode.Return))
@@ -279,6 +280,11 @@ public class Player : MonoBehaviour
 
     void Shoot()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            // Click was on UI — ignore
+            return;
+        }
         if (Time.timeScale >= 1)
         {
             Cascarone cascarone = FindCascarone();

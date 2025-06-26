@@ -12,7 +12,5 @@ public class RandomSound : MonoBehaviour
     {
         soundSource.clip = (ambience[Random.Range(0, ambience.Length - 1)]);
         soundSource.Play();
-        Debug.Log(soundSource.isPlaying);
-        Debug.Log(soundSource.clip.name);
     }
 }
