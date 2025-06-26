@@ -78,10 +78,13 @@ public class GameController : MonoBehaviour
     [SerializeField] compass theCompass;
 
     [SerializeField] GameObject creditsPage;
-
+    
     [SerializeField] GameObject armoredIcon;
 
     public ParticleSystemPool confettiPop;
+
+    [SerializeField] AudioClip winSound;
+    [SerializeField] AudioClip loseSound;
 
     private void OnEnable()
     {
@@ -159,11 +162,6 @@ public class GameController : MonoBehaviour
         player.tr.enabled = false;
         foreach (Transform de in deadEnemiesParent)
             de.GetComponent<Enemy>().tr.enabled = false;
-        Invoke("ActuallyRestart", 0.01f);
-    }
-
-    void ActuallyRestart()
-    {
         SceneManager.LoadScene(0);
     }
 
@@ -171,6 +169,7 @@ public class GameController : MonoBehaviour
     {
         CloseSettings();
         winScreen.SetActive(true);
+        player.SFX.PlayOneShot(winSound);
         Time.timeScale = 0;
     }
     public void Lose()
@@ -252,7 +251,8 @@ public class GameController : MonoBehaviour
 
     void ChangeTarget()
     {
-        theCompass.target = enemyParent.GetChild(Random.Range(0, enemyParent.childCount - 1));
+        if(enemyParent.childCount > 0)
+            theCompass.target = enemyParent.GetChild(Random.Range(0, enemyParent.childCount - 1));
     }
 
     public void ShowCredits()
@@ -273,5 +273,15 @@ public class GameController : MonoBehaviour
     public void HideArmoredIcon()
     {
         armoredIcon.SetActive(false);
+    }
+
+    public void ToggleMute()
+    {
+        AudioListener.volume = 1 - AudioListener.volume;
+    }
+
+    public void CloseGame()
+    {
+        Application.Quit();
     }
 }

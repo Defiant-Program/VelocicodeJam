@@ -74,7 +74,9 @@ public class Player : MonoBehaviour
     [SerializeField] public AudioSource BGM;
     [SerializeField] public AudioSource SFX;
 
-    [SerializeField] AudioClip throwEggSFX;
+    [SerializeField] AudioClip[] throwEggSFX;
+
+    [SerializeField] AudioClip shieldDown;
 
     void Start()
     {
@@ -300,7 +302,7 @@ public class Player : MonoBehaviour
                 cascarone.trajectory = Vector3.right * 5;
             cascarone.transform.position = transform.position + Vector3.up * 1.33f + (cascarone.trajectory.normalized * 3);
             cascarone.gameObject.SetActive(true);
-            SFX.PlayOneShot(throwEggSFX);
+            SFX.PlayOneShot(throwEggSFX[Random.Range(0, throwEggSFX.Length-1)]);
             GetAmmo(-1);
         }
     }
@@ -328,6 +330,7 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("haha I win");
                 armored = false;
+                SFX.PlayOneShot(shieldDown);
             }
             else
             {

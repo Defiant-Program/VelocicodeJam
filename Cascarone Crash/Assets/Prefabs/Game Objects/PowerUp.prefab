@@ -132,6 +132,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammo: 0
   powerup: 1
+  ammoRefill: {fileID: 0}
+  getArmor: {fileID: 8300000, guid: dac6c50746bd4aa409597634c3a845fc, type: 3}
+  getMedal: {fileID: 0}
 --- !u!65 &7586944212259454594
 BoxCollider:
   m_ObjectHideFlags: 0

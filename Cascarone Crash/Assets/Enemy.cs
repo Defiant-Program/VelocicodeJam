@@ -190,6 +190,7 @@ public class Enemy : MonoBehaviour
                 killedBy.GetComponent<Enemy>().AddKillCount();
             else
             {
+                GameController.GC.player.GetGold(1);
                 if (Random.Range(0, 5) == 3)
                 {
                     int randomMedals = Random.Range(0, 4);
@@ -343,5 +344,14 @@ public class Enemy : MonoBehaviour
                 yield return new WaitForSeconds(0.5f);
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        tr.Clear();
+    }
+    private void OnDestroy()
+    {
+        tr.Clear();
     }
 }

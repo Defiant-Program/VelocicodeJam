@@ -87,8 +87,8 @@ MonoBehaviour:
   enemyID: 0
   target: {fileID: 0}
   enemiesKilled: 0
-  rb: {fileID: 0}
-  tr: {fileID: 0}
+  rb: {fileID: 613852602136051827}
+  tr: {fileID: 7969275976334917294}
   enemyRenderer: {fileID: 6608123190521932679}
   movements:
   - Dog
