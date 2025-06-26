@@ -154,6 +154,9 @@ public class Player : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (!GameController.GC.begin)
+            return;
+
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
             Move();
