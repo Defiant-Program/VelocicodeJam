@@ -19,10 +19,14 @@ public class BeginningPreview : MonoBehaviour
 
     [SerializeField] bool previewDone = false;
 
+    [SerializeField] GameObject titleLogo;
+
+    [SerializeField] GameObject goText;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        titleLogo.SetActive(true);
     }
 
     // Update is called once per frame
@@ -34,7 +38,7 @@ public class BeginningPreview : MonoBehaviour
             {
                 if (childIndex >= cameraSpotsParent.childCount)
                 {
-                    transform.position = cameraOGPosition.position + Vector3.back * 6;
+                    transform.position = cameraOGPosition.position + Vector3.back * 12 + Vector3.up * 6;
                 }
                 else
                 {
@@ -46,7 +50,7 @@ public class BeginningPreview : MonoBehaviour
             {
                 if (childIndex >= cameraSpotsParent.childCount)
                 {
-                    transform.position = cameraOGPosition.position + Vector3.back * 6;
+                    transform.position = cameraOGPosition.position + Vector3.back * 12 + Vector3.up * 6;
                     previewDone = true;
                 }
                 else
@@ -66,6 +70,9 @@ public class BeginningPreview : MonoBehaviour
 
             if (Vector3.Distance(transform.position, cameraOGPosition.position) < 0.1f)
             {
+                titleLogo.SetActive(false);
+                goText.SetActive(true);
+
                 transform.position = cameraOGPosition.position;
                 GameController.GC.begin = true;
                 enabled = false;
@@ -79,6 +86,8 @@ public class BeginningPreview : MonoBehaviour
                 // Click was on UI — ignore
                 return;
             }
+            titleLogo.SetActive(false);
+            goText.SetActive(true);
             Debug.Log("skipping...");
             transform.position = cameraOGPosition.position;
             GameController.GC.begin = true;
