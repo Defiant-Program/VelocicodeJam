@@ -25,6 +25,11 @@ public class BeginningPreview : MonoBehaviour
 
     [SerializeField] GameObject goText;
 
+    void OnEnable()
+    {
+        cameraOGPosition.position = transform.position;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
