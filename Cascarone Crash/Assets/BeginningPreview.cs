@@ -13,7 +13,9 @@ public class BeginningPreview : MonoBehaviour
 
     float panDuration = 0;
 
-    Vector3[] directions = new Vector3[] { Vector3.right, Vector3.forward, Vector3.left, Vector3.back };
+    [Header("Just edit X and Z")]
+    [Header("# here should match # of Camera Spots Children")]
+    [SerializeField] Vector3[] directions = new Vector3[] { Vector3.right, Vector3.forward, Vector3.left, Vector3.back };
 
     float panSpeed = 10;
 
