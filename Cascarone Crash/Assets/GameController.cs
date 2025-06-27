@@ -91,8 +91,22 @@ public class GameController : MonoBehaviour
 
     [SerializeField] GameObject howToPlayPage;
 
+    [SerializeField] GameObject resourcesView;
+
     private void OnEnable()
     {
+        if (PlayerPrefs.HasKey("Volume"))
+        {
+            AudioListener.volume = PlayerPrefs.GetFloat("Volume");
+            if(PlayerPrefs.GetFloat("Volume") == 0)
+            {
+                mute.isOn = true;
+            }
+            else
+            {
+                mute.isOn = false;
+            }
+        }
         if (GC == null)
         {
             GC = this;
@@ -265,12 +279,14 @@ public class GameController : MonoBehaviour
     public void ShowCredits()
     {
         settings.SetActive(false);
+        resourcesView.SetActive(false);
         creditsPage.SetActive(true);
     }
     public void CloseCredits()
     {
         settings.SetActive(true);
         creditsPage.SetActive(false);
+        resourcesView.SetActive(false);
     }
 
     public void ShowArmoredIcon()
@@ -284,8 +300,24 @@ public class GameController : MonoBehaviour
 
     public void ToggleMute()
     {
-        AudioListener.volume = 1 - AudioListener.volume;
+        if (mute.isOn == false)
+        {
+            AudioListener.volume = 1;
+        }
+        else
+        {
+            AudioListener.volume = 0;
+        }
+        PlayerPrefs.SetFloat("Volume", AudioListener.volume);
+
     }
+
+    public void ShowResources()
+    {
+        creditsPage.SetActive(false);
+        resourcesView.SetActive(true);
+    }
+
 
     public void ShowHowToPlay()
     {
