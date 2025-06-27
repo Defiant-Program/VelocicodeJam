@@ -74,6 +74,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] public AudioSource BGM;
     [SerializeField] public AudioSource SFX;
+    [SerializeField] public AudioSource win;
 
     [SerializeField] AudioClip[] throwEggSFX;
 
@@ -88,6 +89,8 @@ public class Player : MonoBehaviour
 
         ChangeAim();
 
+        SFX.ignoreListenerPause = true;
+        win.ignoreListenerPause = true;
     }
 
     // Update is called once per frame

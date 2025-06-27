@@ -174,9 +174,11 @@ public class GameController : MonoBehaviour
     {
         CloseSettings();
         winScreen.SetActive(true);
-        player.SFX.PlayOneShot(winSound);
+        if(!player.win.isPlaying)
+            player.win.Play();
         Time.timeScale = 0;
     }
+
     public void Lose()
     {
         CloseSettings();

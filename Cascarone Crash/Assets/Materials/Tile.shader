@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
 Shader "Custom/TileRegionTiling_WithRepeat"
 {
     Properties
@@ -45,6 +47,7 @@ Shader "Custom/TileRegionTiling_WithRepeat"
                     return o;
                 }
 
+                
                 fixed4 frag(v2f i) : SV_Target
                 {
                     // Scale UVs by repeat factor to shrink the tiles
@@ -57,6 +60,7 @@ Shader "Custom/TileRegionTiling_WithRepeat"
 
                     return tex2D(_MainTex, uv);
                 }
+                
                 ENDCG
             }
         }

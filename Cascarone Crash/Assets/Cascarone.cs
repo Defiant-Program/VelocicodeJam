@@ -25,6 +25,7 @@ public class Cascarone : MonoBehaviour
     bool popped = false;
     void OnEnable()
     {
+        currentLifeSpan = 0;
         popped = false;
         if (mr)
             mr.enabled = true;
