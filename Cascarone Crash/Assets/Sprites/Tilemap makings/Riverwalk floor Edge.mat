@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Riverwalk floor Edge
-  m_Shader: {fileID: 4800000, guid: 5b9e922638e335646be6b3e8825961b2, type: 3}
+  m_Shader: {fileID: 4800000, guid: 250b4d3dc9e68c74f887d7353cb80ae7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -61,6 +61,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AtlasAspect: 1.05
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -75,7 +76,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TileRepeat: 0.2
+    - _TileRepeat: 0.05
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:

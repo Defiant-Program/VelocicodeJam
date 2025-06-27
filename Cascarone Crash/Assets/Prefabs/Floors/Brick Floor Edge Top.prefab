@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6543598127616999228}
   - component: {fileID: 6962481962131832307}
   m_Layer: 0
-  m_Name: Brick Floor Edge
+  m_Name: Brick Floor Edge Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
