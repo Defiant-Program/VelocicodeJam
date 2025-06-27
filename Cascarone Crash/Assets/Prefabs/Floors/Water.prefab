@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5068259240919184371}
   - component: {fileID: 840602493610387716}
   - component: {fileID: 5927799294620695581}
+  - component: {fileID: 6223588648894649189}
   m_Layer: 4
   m_Name: Water
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -105.65086, y: 5.518836, z: -24.09622}
-  m_LocalScale: {x: 3.0241, y: 3.0241, z: 3.0241}
+  m_LocalScale: {x: 52.189537, y: 1, z: 48.094364}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4dbae4b33875d5144841324f0b3519eb, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -97,11 +98,25 @@ BoxCollider:
     m_Bits: 1536
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 14.540873, z: 1}
-  m_Center: {x: 0, y: 2.1547468, z: 0}
+  m_Size: {x: 1, y: 6.89, z: 1}
+  m_Center: {x: 0, y: 2.73, z: 0}
+--- !u!114 &6223588648894649189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4214108407378809261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e370aa5f4981b346b0eb064cf043d4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 840602493610387716}
+  tileMultiplier: {x: 5.77, y: 10.51}
