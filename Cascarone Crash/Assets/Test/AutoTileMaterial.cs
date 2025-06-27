@@ -13,7 +13,7 @@ public class AutoTileMaterial : MonoBehaviour
         {
             Vector3 scale = transform.lossyScale;
             Vector2 newTiling = new Vector2(scale.x * tileMultiplier.x, scale.y * tileMultiplier.y);
-            targetRenderer.material.mainTextureScale = newTiling;
+            targetRenderer.sharedMaterial.mainTextureScale = newTiling;
         }
     }
 }

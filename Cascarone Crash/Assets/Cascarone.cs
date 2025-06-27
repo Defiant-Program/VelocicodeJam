@@ -23,18 +23,24 @@ public class Cascarone : MonoBehaviour
 
     public bool thrownByPlayer;
     bool popped = false;
+
+    [SerializeField] AudioClip[] hitSounds;
+    [SerializeField] AudioClip[] missSounds;
+    [SerializeField] AudioClip[] throwSounds;
+
+    [SerializeField] AudioSource eggNoise;
+
     void OnEnable()
     {
         currentLifeSpan = 0;
         popped = false;
-        if (mr)
-            mr.enabled = true;
+        if (sr)
+            sr.enabled = true;
         if (cc)
             cc.enabled = true;
         if(rb)
             rb.isKinematic = false;
         transform.SetAsLastSibling();
-        Invoke("DisableSelf", lifeSpan);
         if (trajectory == Vector3.zero)
             trajectory = Vector3.right;
 
@@ -46,11 +52,16 @@ public class Cascarone : MonoBehaviour
             test.SetTexture("_DecorTex", textures[Random.Range(0, textures.Length - 1)]);
             sr.SetPropertyBlock(test);
         }
+
+        if(sr.isVisible)
+        {
+            eggNoise.PlayOneShot(throwSounds[Random.Range(0, throwSounds.Length - 1)]);
+        }
+
     }
 
     void Start()
     {
-        mr = transform.GetChild(0).GetComponent<MeshRenderer>();
         cc = GetComponent<CapsuleCollider>();
 
     }
@@ -63,6 +74,11 @@ public class Cascarone : MonoBehaviour
         transform.GetChild(0).localPosition = (Vector3.up * Mathf.Sin((currentLifeSpan / lifeSpan) * Mathf.PI) * 3) + Vector3.up;
         transform.GetChild(0).Rotate(Vector3.back * Time.deltaTime * 550);
         currentLifeSpan += Time.deltaTime;
+
+        if(currentLifeSpan >= lifeSpan && !popped)
+        {
+            DisableSelf();
+        }
     }
 
     /*
@@ -96,7 +112,13 @@ public class Cascarone : MonoBehaviour
                     sr.enabled = false;
                     cc.enabled = false;
                     rb.isKinematic = true;
+                    popped = true;
                     GameController.GC.confettiPop.EmitFromCascarone(transform.position, trajectory);
+                    if (sr.isVisible)
+                    {
+                        eggNoise.PlayOneShot(hitSounds[Random.Range(0, hitSounds.Length - 1)]);
+                    }
+                    return;
                 }
                 else if (contact.otherCollider.gameObject.tag == "Player")
                 {
@@ -104,25 +126,45 @@ public class Cascarone : MonoBehaviour
                     sr.enabled = false;
                     cc.enabled = false;
                     rb.isKinematic = true;
+                    popped = true;
                     GameController.GC.confettiPop.EmitFromCascarone(transform.position, trajectory);
+                    if (sr.isVisible)
+                    {
+                        eggNoise.PlayOneShot(hitSounds[Random.Range(0, hitSounds.Length - 1)]);
+                    }
 
+                    return;
                 }
                 else
                 {
+                    if (sr.isVisible && !popped)
+                    {
+                        eggNoise.PlayOneShot(missSounds[Random.Range(0, missSounds.Length - 1)]);
+                    }
                     GameController.GC.confettiPop.EmitFromCascarone(transform.position, trajectory);
+                    popped = true;
                 }
             }
+
             sr.enabled = false;
             cc.enabled = false;
             rb.isKinematic = true;
             popped = true;
+
         }
     }
 
     void DisableSelf()
     {
-        if(!popped)
+        if (!popped)
+        {            
             GameController.GC.confettiPop.EmitFromCascarone(transform.position, trajectory);
+            if (sr.isVisible)
+            {
+                GameController.GC.player.SFX.PlayOneShot(missSounds[Random.Range(0, missSounds.Length - 1)]);
+            }
+        }
+        popped = true;
 
         gameObject.SetActive(false);
     }

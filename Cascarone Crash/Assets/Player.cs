@@ -80,6 +80,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] AudioClip shieldDown;
 
+    [SerializeField] AudioClip[] clicks;
+
+
     void Start()
     {
         anim.speed = wobbleSpeed;
@@ -96,8 +99,17 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Clicking UI
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                SFX.PlayOneShot(clicks[Random.Range(0, clicks.Length - 1)]);
+            }
+        }
         if (!GameController.GC.begin)
             return;
+
 
         if (!dead)
         {
