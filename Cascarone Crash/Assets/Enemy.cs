@@ -59,6 +59,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] AudioSource deathZoomNoise;
 
+    [SerializeField] AudioClip[] hitSounds;
 
     void Start()
     {

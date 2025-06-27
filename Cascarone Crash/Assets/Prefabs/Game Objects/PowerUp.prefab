@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4512253584913145285}
   - component: {fileID: 8146941612487244096}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Hat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 7622748185532480822}
   - component: {fileID: 4426589900802466866}
   - component: {fileID: 7586944212259454594}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PowerUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 4224
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0

@@ -114,9 +114,9 @@ public class Cascarone : MonoBehaviour
                     rb.isKinematic = true;
                     popped = true;
                     GameController.GC.confettiPop.EmitFromCascarone(transform.position, trajectory);
-                    if (sr.isVisible)
+                    if (thrownBy == GameController.GC.player.gameObject)
                     {
-                        eggNoise.PlayOneShot(hitSounds[Random.Range(0, hitSounds.Length - 1)]);
+                        GameController.GC.player.hitEnemy.PlayOneShot(hitSounds[Random.Range(0, hitSounds.Length - 1)]);
                     }
                     return;
                 }
@@ -130,7 +130,7 @@ public class Cascarone : MonoBehaviour
                     GameController.GC.confettiPop.EmitFromCascarone(transform.position, trajectory);
                     if (sr.isVisible)
                     {
-                        eggNoise.PlayOneShot(hitSounds[Random.Range(0, hitSounds.Length - 1)]);
+                        GameController.GC.player.hitEnemy.PlayOneShot(hitSounds[Random.Range(0, hitSounds.Length - 1)]);
                     }
 
                     return;

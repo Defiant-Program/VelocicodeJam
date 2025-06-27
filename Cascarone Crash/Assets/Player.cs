@@ -75,6 +75,7 @@ public class Player : MonoBehaviour
     [SerializeField] public AudioSource BGM;
     [SerializeField] public AudioSource SFX;
     [SerializeField] public AudioSource win;
+    [SerializeField] public AudioSource hitEnemy;
 
     [SerializeField] AudioClip[] throwEggSFX;
 
