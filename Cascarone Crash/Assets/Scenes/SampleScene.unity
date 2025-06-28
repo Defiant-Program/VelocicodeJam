@@ -6388,7 +6388,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 203585882}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Egg 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6961,7 +6961,7 @@ GameObject:
   - component: {fileID: 227307257}
   - component: {fileID: 227307259}
   - component: {fileID: 227307258}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7013,9 +7013,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -7597,7 +7597,7 @@ GameObject:
   - component: {fileID: 244923140}
   - component: {fileID: 244923142}
   - component: {fileID: 244923141}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7637,9 +7637,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 2c5b1cf8e76d99d488cde8e234803f33, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -8286,6 +8286,7 @@ MonoBehaviour:
   loseSound: {fileID: 0}
   howToPlayPage: {fileID: 960205946}
   resourcesView: {fileID: 1216818452}
+  closeGame: {fileID: 644908165}
 --- !u!4 &262880214
 Transform:
   m_ObjectHideFlags: 0
@@ -12055,7 +12056,7 @@ GameObject:
   - component: {fileID: 371586883}
   - component: {fileID: 371586885}
   - component: {fileID: 371586884}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12095,9 +12096,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -16474,7 +16475,7 @@ GameObject:
   - component: {fileID: 500074791}
   - component: {fileID: 500074793}
   - component: {fileID: 500074792}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16514,9 +16515,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 10d0a59bb81c2984db544316cbc8e0fc, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -17466,7 +17467,7 @@ GameObject:
   - component: {fileID: 528358830}
   - component: {fileID: 528358832}
   - component: {fileID: 528358831}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17506,9 +17507,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 7d517e1a90ce0524bb828960b7c1cb75, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -17874,7 +17875,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 547585919}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Egg 8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17943,7 +17944,7 @@ GameObject:
   - component: {fileID: 549937030}
   - component: {fileID: 549937032}
   - component: {fileID: 549937031}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17983,9 +17984,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 16d082b5a22b81145b3760c08a5c24f8, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -19138,7 +19139,7 @@ GameObject:
   - component: {fileID: 608715911}
   - component: {fileID: 608715913}
   - component: {fileID: 608715912}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19178,9 +19179,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 8e0d4653d9fa9ae45bf0c3ea5721201c, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -19908,7 +19909,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 630608418}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: New Ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20293,7 +20294,6 @@ GameObject:
   - component: {fileID: 644908169}
   - component: {fileID: 644908168}
   - component: {fileID: 644908167}
-  - component: {fileID: 644908170}
   m_Layer: 5
   m_Name: Close Game
   m_TagString: Untagged
@@ -20415,18 +20415,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 644908165}
   m_CullTransparentMesh: 1
---- !u!114 &644908170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 644908165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c4ab0f4e65de1e49a0b0315f4d10003, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &646402338
 GameObject:
   m_ObjectHideFlags: 0
@@ -20438,7 +20426,7 @@ GameObject:
   - component: {fileID: 646402339}
   - component: {fileID: 646402341}
   - component: {fileID: 646402340}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Enemies remaining UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20479,9 +20467,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -20635,7 +20623,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 651251613}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Egg 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23027,7 +23015,7 @@ GameObject:
   - component: {fileID: 728545062}
   - component: {fileID: 728545064}
   - component: {fileID: 728545063}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Ammo Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23067,9 +23055,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -23473,7 +23461,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 740847561}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Egg 9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28783,7 +28771,7 @@ GameObject:
   - component: {fileID: 897663217}
   - component: {fileID: 897663219}
   - component: {fileID: 897663218}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28823,9 +28811,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: bebfef4a3253f15448f55e23cd96e7a7, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -35316,7 +35304,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 945195570}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Egg 12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35354,7 +35342,7 @@ GameObject:
   - component: {fileID: 947889463}
   - component: {fileID: 947889465}
   - component: {fileID: 947889464}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35394,9 +35382,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 1d1cf8c6e12a6ab448433fe857f4f3e1, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -35555,7 +35543,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 954576617}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Egg 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37066,7 +37054,7 @@ GameObject:
   - component: {fileID: 992489988}
   - component: {fileID: 992489990}
   - component: {fileID: 992489989}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Medals UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37107,9 +37095,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -40502,7 +40490,7 @@ GameObject:
   - component: {fileID: 1138240834}
   - component: {fileID: 1138240836}
   - component: {fileID: 1138240835}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40542,9 +40530,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: d7172e0978feca246a88fd1fdf9073e1, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -40577,7 +40565,7 @@ GameObject:
   - component: {fileID: 1139484679}
   - component: {fileID: 1139484681}
   - component: {fileID: 1139484680}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Ammo UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40618,9 +40606,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -44054,7 +44042,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1239621196}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Armored
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52249,7 +52237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1465700372}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Egg 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52387,7 +52375,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1470280588}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Egg 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56994,7 +56982,7 @@ GameObject:
   - component: {fileID: 1605067807}
   - component: {fileID: 1605067809}
   - component: {fileID: 1605067808}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57034,9 +57022,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: c8e58c5b00837bf429f07c802ab6e9cf, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -57788,7 +57776,7 @@ GameObject:
   - component: {fileID: 1642451432}
   - component: {fileID: 1642451434}
   - component: {fileID: 1642451433}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57828,9 +57816,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: af9ac31e1cd1bb14891572e385e157ad, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -60672,7 +60660,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1716468506}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Egg 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61433,7 +61421,7 @@ GameObject:
   - component: {fileID: 1735857232}
   - component: {fileID: 1735857234}
   - component: {fileID: 1735857233}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61473,9 +61461,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 840a35b5b99a2bc4d93557023ecfd1f6, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -62492,7 +62480,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1776002321}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Egg 10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64134,7 +64122,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1816075530}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Egg 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73599,7 +73587,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1942509927}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Egg 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74756,7 +74744,7 @@ GameObject:
   - component: {fileID: 1973819188}
   - component: {fileID: 1973819190}
   - component: {fileID: 1973819189}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Ammo Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74796,9 +74784,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -76113,7 +76101,7 @@ GameObject:
   - component: {fileID: 2010573665}
   - component: {fileID: 2010573667}
   - component: {fileID: 2010573666}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Enemy Count Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76153,9 +76141,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -79369,7 +79357,7 @@ GameObject:
   - component: {fileID: 2076480110}
   - component: {fileID: 2076480112}
   - component: {fileID: 2076480111}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79409,9 +79397,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 26d7e9c6d75dd5747b66b95853a81bec, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

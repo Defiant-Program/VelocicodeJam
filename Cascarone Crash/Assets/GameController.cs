@@ -93,6 +93,9 @@ public class GameController : MonoBehaviour
 
     [SerializeField] GameObject resourcesView;
 
+    [SerializeField] GameObject closeGame;
+    RuntimePlatform platform;
+
     private void OnEnable()
     {
         if (PlayerPrefs.HasKey("Volume"))
